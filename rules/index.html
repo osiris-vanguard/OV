@@ -1,326 +1,785 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OSIRIS VANGUARD | AMBIENCE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171a16">
+  <title>Osiris Vanguard | Rules & Regulations</title>
 
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
-    background:
-        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.8)),
-        url("assets/background.jpg") center / cover no-repeat fixed;
-    background-color: #080b0a;
-}
-
-.player {
-    width: 340px;
-    max-width: 90%;
-    padding: 28px;
-    background: rgba(10, 14, 12, .82);
-    border: 1px solid rgba(255,255,255,.12);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 15px 50px rgba(0,0,0,.5);
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-}
-
-.header .symbol {
-    font-size: 22px;
-    color: #a8b4a6;
-}
-
-.header h1 {
-    font-size: 13px;
-    letter-spacing: 3px;
-    font-weight: 700;
-}
-
-.cover {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    display: block;
-    margin-bottom: 22px;
-    border: 1px solid rgba(255,255,255,.08);
-}
-
-.track-info {
-    margin-bottom: 22px;
-}
-
-.track-info h2 {
-    font-size: 19px;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-}
-
-.track-info p {
-    font-size: 12px;
-    color: #a7aaa7;
-    letter-spacing: 1px;
-}
-
-.progress-area {
-    margin-bottom: 18px;
-}
-
-.progress {
-    width: 100%;
-    height: 4px;
-    background: #353a36;
-    appearance: none;
-    cursor: pointer;
-    accent-color: #a8b4a6;
-}
-
-.progress::-webkit-slider-thumb {
-    appearance: none;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #c8d1c5;
-}
-
-.time {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    font-size: 10px;
-    color: #8c928d;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin: 20px 0;
-}
-
-.controls button {
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.controls .play {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #c4cec1;
-    color: #101410;
-    font-size: 19px;
-}
-
-.volume-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-    color: #a7aaa7;
-    font-size: 13px;
-}
-
-.volume {
-    flex: 1;
-    accent-color: #a8b4a6;
-    cursor: pointer;
-}
-
-.footer {
-    margin-top: 25px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(255,255,255,.08);
-    text-align: center;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: #737a74;
-}
-
-@media (max-width: 480px) {
-    .player {
-        padding: 22px;
+  <style>
+    :root {
+      --bg: #111510;
+      --panel: rgba(20, 24, 19, 0.72);
+      --panel-light: rgba(32, 38, 29, 0.78);
+      --border: rgba(130, 145, 110, 0.28);
+      --olive: #899875;
+      --olive-light: #b5c29f;
+      --red: #8b3434;
+      --text: #d5d9d1;
+      --muted: #92998e;
     }
-}
-</style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(
+          rgba(9, 12, 9, 0.58),
+          rgba(9, 12, 9, 0.72)
+        ),
+        url("../assets/background.jpg") center / cover no-repeat;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 35%,
+        rgba(0, 0, 0, 0.35) 100%
+      );
+    }
+
+    a {
+      color: var(--olive-light);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 6%;
+      background: rgba(12, 15, 12, 0.82);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      color: #e2e6dc;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      color: var(--olive);
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      max-width: 1050px;
+      margin: 65px auto 35px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--olive-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0;
+      color: #edf0e8;
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1.15;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 16px auto;
+      color: #b2b8ad;
+      font-size: 14px;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 2px;
+      margin: 25px auto;
+      background: var(--olive);
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 230px minmax(0, 1fr);
+      align-items: start;
+      gap: 24px;
+      max-width: 1150px;
+      margin: 0 auto 90px;
+      padding: 0 24px;
+    }
+
+    .sidebar,
+    .rule-card,
+    .notice {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 82px;
+      padding: 18px;
+      border-radius: 5px;
+    }
+
+    .sidebar-title {
+      margin: 0 0 12px;
+      color: var(--olive-light);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 8px 10px;
+      color: #aeb5a8;
+      font-size: 12px;
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #edf0e8;
+      background: rgba(130, 145, 110, 0.1);
+      border-left-color: var(--olive);
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .notice {
+      margin-bottom: 18px;
+      padding: 18px 22px;
+      border-left: 3px solid var(--red);
+      border-radius: 4px;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #dba5a0;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .notice p {
+      margin: 0;
+      color: #c2c7bd;
+      font-size: 13px;
+    }
+
+    .rule-card {
+      margin-bottom: 18px;
+      padding: 24px;
+      border-radius: 5px;
+      scroll-margin-top: 90px;
+    }
+
+    .rule-heading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rule-number {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      color: var(--olive-light);
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(130, 145, 110, 0.12);
+      border: 1px solid var(--border);
+    }
+
+    h2 {
+      margin: 0;
+      color: #e1e5dc;
+      font-size: 17px;
+      letter-spacing: 0.5px;
+    }
+
+    .rule-card p {
+      margin: 8px 0;
+      color: #c0c6bb;
+      font-size: 13px;
+    }
+
+    .rule-card ul {
+      margin: 10px 0;
+      padding-left: 20px;
+      color: #c0c6bb;
+      font-size: 13px;
+    }
+
+    .rule-card li {
+      margin: 7px 0;
+    }
+
+    .rule-card strong {
+      color: #e1e5dc;
+    }
+
+    .footer {
+      padding: 30px 20px 100px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .music-player {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(350px, calc(100vw - 40px));
+      padding: 13px 15px;
+      background: rgba(15, 19, 14, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .music-icon {
+      display: grid;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: var(--olive-light);
+      background: rgba(130, 145, 110, 0.13);
+      border: 1px solid var(--border);
+      font-size: 16px;
+    }
+
+    .music-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .music-title {
+      color: #e1e5dc;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .music-subtitle {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .music-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .music-controls button {
+      width: 32px;
+      height: 32px;
+      color: var(--olive-light);
+      background: rgba(130, 145, 110, 0.12);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .music-controls button:hover {
+      background: rgba(130, 145, 110, 0.25);
+    }
+
+    input[type="range"] {
+      width: 65px;
+      accent-color: var(--olive-light);
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2px;
+      }
+
+      .hero {
+        margin-top: 45px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar {
+        padding: 12px 16px;
+      }
+
+      .status {
+        font-size: 9px;
+      }
+
+      .container {
+        padding: 0 14px;
+      }
+
+      .rule-card {
+        padding: 18px;
+      }
+
+      .music-player {
+        right: 10px;
+        bottom: 10px;
+        width: calc(100vw - 20px);
+      }
+
+      input[type="range"] {
+        width: 48px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="topbar">
+    <div class="brand">OSIRIS <span>VANGUARD</span></div>
+    <div class="status">Personnel Regulations // 01</div>
+  </header>
 
-<div class="player">
+  <section class="hero">
+    <div class="eyebrow">Osiris Vanguard Legal Division</div>
+    <h1>Rules & Regulations</h1>
+    <div class="hero-line"></div>
+    <p>
+      Official conduct standards, operational guidelines, and regulations
+      governing all members of Osiris Vanguard.
+    </p>
+  </section>
 
-    <div class="header">
-        <span class="symbol">♫</span>
-        <h1>OSIRIS AMBIENCE</h1>
-    </div>
+  <main class="container">
+    <aside class="sidebar">
+      <h3 class="sidebar-title">Regulation Index</h3>
+      <nav>
+        <a href="#conduct">01 // General Conduct</a>
+        <a href="#communication">02 // Communication</a>
+        <a href="#privacy">03 // Privacy & Security</a>
+        <a href="#facility">04 // Facility Rules</a>
+        <a href="#ranks">05 // Ranks & Authority</a>
+        <a href="#applications">06 // Applications</a>
+        <a href="#operations">07 // Operations</a>
+        <a href="#channels">08 // Voice Channels</a>
+        <a href="#advertising">09 // Advertising</a>
+        <a href="#reports">10 // Reports & Evidence</a>
+        <a href="#staff">11 // Staff Conduct</a>
+        <a href="#partnerships">12 // Partnerships</a>
+        <a href="#accounts">13 // Account Integrity</a>
+        <a href="#enforcement">14 // Enforcement</a>
+        <a href="#appeals">15 // Appeals</a>
+        <a href="#final">16 // Final Notice</a>
+      </nav>
+    </aside>
 
-    <img
-        class="cover"
-        src="assets/ascend-cover.jpg"
-        alt="Kevin Graham - Ascend cover"
-    >
+    <div class="content">
+      <div class="notice">
+        <strong>Official Notice</strong>
+        <p>
+          All members are expected to read, understand, and comply with these
+          regulations. Membership within Osiris Vanguard signifies acceptance
+          of the standards listed below.
+        </p>
+      </div>
 
-    <div class="track-info">
-        <h2>ASCEND</h2>
-        <p>KEVIN GRAHAM</p>
-    </div>
-
-    <audio id="audio" autoplay loop preload="auto">
-        <source src="assets/bgm.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="progress-area">
-        <input
-            id="progress"
-            class="progress"
-            type="range"
-            min="0"
-            max="100"
-            value="0"
-        >
-
-        <div class="time">
-            <span id="currentTime">0:00</span>
-            <span id="duration">0:00</span>
+      <section class="rule-card" id="conduct">
+        <div class="rule-heading">
+          <div class="rule-number">01</div>
+          <h2>General Conduct</h2>
         </div>
+        <ul>
+          <li>All members must maintain respectful and professional behavior.</li>
+          <li>Harassment, discrimination, threats, and targeted abuse are prohibited.</li>
+          <li>Do not deliberately disrupt community activities or member interactions.</li>
+          <li>Follow the instructions of authorized staff when they are acting within their responsibilities.</li>
+          <li>Members are responsible for their own actions and conduct.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="communication">
+        <div class="rule-heading">
+          <div class="rule-number">02</div>
+          <h2>Communication Standards</h2>
+        </div>
+        <ul>
+          <li>Keep discussions relevant to the channel or activity.</li>
+          <li>Spam, excessive mentions, and disruptive message flooding are prohibited.</li>
+          <li>Do not impersonate staff, command personnel, or other members.</li>
+          <li>Use appropriate language and maintain a respectful tone.</li>
+          <li>Resolve disagreements without escalating into personal attacks.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="privacy">
+        <div class="rule-heading">
+          <div class="rule-number">03</div>
+          <h2>Privacy & Security</h2>
+        </div>
+        <ul>
+          <li>Do not disclose private member information without permission.</li>
+          <li>Sharing private messages, recordings, or personal details without consent may be restricted.</li>
+          <li>Never request or share passwords, authentication codes, or account credentials.</li>
+          <li>Report suspicious links, compromised accounts, and security concerns to staff.</li>
+          <li>Do not attempt to access accounts, channels, or systems without authorization.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="facility">
+        <div class="rule-heading">
+          <div class="rule-number">04</div>
+          <h2>Facility & Community Rules</h2>
+        </div>
+        <ul>
+          <li>Follow the rules of the relevant game, server, and community environment.</li>
+          <li>Do not exploit glitches or use unauthorized tools to gain an unfair advantage.</li>
+          <li>Respect designated restricted areas and roleplay boundaries.</li>
+          <li>Do not intentionally interfere with another member's roleplay or event.</li>
+          <li>Where Facility RP is active, remain within the established scenario and its rules.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="ranks">
+        <div class="rule-heading">
+          <div class="rule-number">05</div>
+          <h2>Ranks & Authority</h2>
+        </div>
+        <ul>
+          <li>Rank does not grant permission to harass, threaten, or mistreat members.</li>
+          <li>Authority must be exercised responsibly and within assigned duties.</li>
+          <li>Do not falsely claim a rank, title, or command position.</li>
+          <li>Members may raise concerns about staff decisions through the appropriate channels.</li>
+          <li>Abuse of authority may result in disciplinary action.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="applications">
+        <div class="rule-heading">
+          <div class="rule-number">06</div>
+          <h2>Applications & Recruitment</h2>
+        </div>
+        <ul>
+          <li>Applications must contain accurate and honest information.</li>
+          <li>Do not copy another member's application or submit fabricated credentials.</li>
+          <li>Repeatedly pressuring reviewers for a decision is prohibited.</li>
+          <li>Recruitment must follow the currently established process.</li>
+          <li>Staff may reject applications that fail to meet the stated requirements.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="operations">
+        <div class="rule-heading">
+          <div class="rule-number">07</div>
+          <h2>Events & Operations</h2>
+        </div>
+        <ul>
+          <li>Follow the event briefing and instructions provided by authorized organizers.</li>
+          <li>Do not disrupt active events or intentionally sabotage team activities.</li>
+          <li>Respect event attendance, preparation, and conduct requirements.</li>
+          <li>Do not claim participation, achievements, or results that did not occur.</li>
+          <li>Operational details must remain within the authorized audience when marked private.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="channels">
+        <div class="rule-heading">
+          <div class="rule-number">08</div>
+          <h2>Voice Channel Regulations</h2>
+        </div>
+        <ul>
+          <li>Keep microphone use appropriate and avoid excessive background noise.</li>
+          <li>Do not interrupt briefings or deliberately talk over other members.</li>
+          <li>Soundboards, music, and audio effects must not disrupt communication.</li>
+          <li>Follow channel-specific requirements and staff instructions.</li>
+          <li>Do not record or distribute private voice conversations without appropriate permission.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="advertising">
+        <div class="rule-heading">
+          <div class="rule-number">09</div>
+          <h2>Advertising & External Content</h2>
+        </div>
+        <ul>
+          <li>Unauthorized advertising, recruitment, or promotional links are prohibited.</li>
+          <li>Do not distribute malicious links, suspicious downloads, or harmful content.</li>
+          <li>External content must comply with the community's standards.</li>
+          <li>Use designated channels for approved promotions.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="reports">
+        <div class="rule-heading">
+          <div class="rule-number">10</div>
+          <h2>Reports & Evidence</h2>
+        </div>
+        <ul>
+          <li>Reports must be submitted honestly and in good faith.</li>
+          <li>Provide relevant context and evidence whenever possible.</li>
+          <li>Do not fabricate, alter, or deliberately misrepresent evidence.</li>
+          <li>False or malicious reports may result in disciplinary action.</li>
+          <li>Do not publicly expose private reports or ongoing moderation cases without authorization.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="staff">
+        <div class="rule-heading">
+          <div class="rule-number">11</div>
+          <h2>Staff & Moderation Conduct</h2>
+        </div>
+        <ul>
+          <li>Staff must act fairly, consistently, and professionally.</li>
+          <li>Moderation tools must only be used for legitimate administrative purposes.</li>
+          <li>Staff must not disclose confidential moderation information without authorization.</li>
+          <li>Personal disputes must not influence moderation decisions.</li>
+          <li>Abuse or misuse of staff permissions may result in removal from the position.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="partnerships">
+        <div class="rule-heading">
+          <div class="rule-number">12</div>
+          <h2>Partnerships & Affiliations</h2>
+        </div>
+        <ul>
+          <li>Partnerships must be approved by authorized representatives.</li>
+          <li>Members must not make unofficial commitments on behalf of Osiris Vanguard.</li>
+          <li>Do not misrepresent the status or terms of an affiliation.</li>
+          <li>Partnership-related disputes should be directed to the appropriate leadership.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="accounts">
+        <div class="rule-heading">
+          <div class="rule-number">13</div>
+          <h2>Account Integrity & Rule Evasion</h2>
+        </div>
+        <ul>
+          <li>Do not use alternate accounts to evade moderation or restrictions.</li>
+          <li>Do not exploit account changes to conceal misconduct.</li>
+          <li>Impersonation and fraudulent identity claims are prohibited.</li>
+          <li>Members must comply with applicable platform rules and terms of service.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="enforcement">
+        <div class="rule-heading">
+          <div class="rule-number">14</div>
+          <h2>Enforcement & Disciplinary Action</h2>
+        </div>
+        <p>
+          Violations may result in action depending on severity, context,
+          frequency, and available evidence.
+        </p>
+        <ul>
+          <li>Verbal or written warning.</li>
+          <li>Temporary restriction or removal from an activity.</li>
+          <li>Suspension or removal from the community.</li>
+          <li>Removal of rank, role, or privileges.</li>
+          <li>Permanent restriction for severe or repeated violations.</li>
+        </ul>
+        <p>
+          Osiris Vanguard reserves the right to determine an appropriate
+          response to conduct that threatens the safety or integrity of the community.
+        </p>
+      </section>
+
+      <section class="rule-card" id="appeals">
+        <div class="rule-heading">
+          <div class="rule-number">15</div>
+          <h2>Appeals & Review</h2>
+        </div>
+        <ul>
+          <li>Members may submit an appeal through the designated process.</li>
+          <li>Appeals should include relevant context and supporting evidence.</li>
+          <li>Do not spam staff or repeatedly submit identical appeals.</li>
+          <li>Submitting an appeal does not guarantee that a decision will be reversed.</li>
+          <li>Abusive or deliberately false appeals may be dismissed.</li>
+        </ul>
+      </section>
+
+      <section class="rule-card" id="final">
+        <div class="rule-heading">
+          <div class="rule-number">16</div>
+          <h2>Final Notice</h2>
+        </div>
+        <p>
+          These regulations exist to maintain a disciplined, respectful,
+          and organized community.
+        </p>
+        <p>
+          All members are expected to remain informed of applicable rules
+          and updates. Ignorance of the regulations does not automatically
+          exempt a member from accountability.
+        </p>
+        <p>
+          <strong>
+            ONE CREW. ONE FAMILY. — OSIRIS VANGUARD
+          </strong>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    OSIRIS VANGUARD // INTERNAL REGULATIONS
+  </footer>
+
+  <div class="music-player">
+    <div class="music-icon">♫</div>
+
+    <div class="music-info">
+      <div class="music-title">OSIRIS AMBIENCE</div>
+      <div class="music-subtitle" id="musicStatus">Initializing audio...</div>
     </div>
 
-    <div class="controls">
-        <button id="restart" aria-label="Restart">↺</button>
+    <div class="music-controls">
+      <button
+        id="musicToggle"
+        type="button"
+        aria-label="Play or pause background music"
+      >Ⅱ</button>
 
-        <button id="playButton" class="play" aria-label="Play">
-            ▶
-        </button>
-
-        <button id="stopButton" aria-label="Stop">■</button>
+      <input
+        id="volumeControl"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.07"
+        aria-label="Music volume"
+      >
     </div>
+  </div>
 
-    <div class="volume-area">
-        <span>♫</span>
+  <audio
+    id="backgroundMusic"
+    src="../assets/bgm.mp3"
+    loop
+    preload="auto"
+    autoplay
+  ></audio>
 
-        <input
-            id="volume"
-            class="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="0.07"
-        >
-    </div>
+  <script>
+    const audio = document.getElementById("backgroundMusic");
+    const toggle = document.getElementById("musicToggle");
+    const volumeControl = document.getElementById("volumeControl");
+    const musicStatus = document.getElementById("musicStatus");
 
-    <div class="footer">
-        OSIRIS VANGUARD // AMBIENCE SYSTEM
-    </div>
+    // Initial volume: 7%
+    audio.volume = 0.07;
+    volumeControl.value = 0.07;
 
-</div>
+    function updateMusicUI() {
+      if (audio.paused) {
+        toggle.textContent = "▶";
+        musicStatus.textContent = "Paused";
+      } else {
+        toggle.textContent = "Ⅱ";
+        musicStatus.textContent = "Now Playing";
+      }
+    }
 
-<script>
-const audio = document.getElementById("audio");
-const playButton = document.getElementById("playButton");
-const stopButton = document.getElementById("stopButton");
-const restartButton = document.getElementById("restart");
-const progress = document.getElementById("progress");
-const volume = document.getElementById("volume");
+    async function startMusic() {
+      try {
+        // Keep the initial volume at 7%.
+        audio.volume = Number(volumeControl.value);
 
-const currentTimeDisplay = document.getElementById("currentTime");
-const durationDisplay = document.getElementById("duration");
+        await audio.play();
+        updateMusicUI();
+      } catch (error) {
+        musicStatus.textContent = "Press play to start";
+        toggle.textContent = "▶";
+      }
+    }
 
-audio.volume = 0.07;
-audio.loop = true;
-
-function formatTime(seconds) {
-    if (!Number.isFinite(seconds)) return "0:00";
-
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-
-    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-function updatePlayer() {
-    if (!audio.duration) return;
-
-    progress.value = (audio.currentTime / audio.duration) * 100;
-
-    currentTimeDisplay.textContent = formatTime(audio.currentTime);
-    durationDisplay.textContent = formatTime(audio.duration);
-}
-
-audio.addEventListener("timeupdate", updatePlayer);
-
-audio.addEventListener("loadedmetadata", updatePlayer);
-
-audio.addEventListener("play", () => {
-    playButton.textContent = "Ⅱ";
-});
-
-audio.addEventListener("pause", () => {
-    playButton.textContent = "▶";
-});
-
-playButton.addEventListener("click", () => {
-    if (audio.paused) {
-        audio.play();
-    } else {
+    toggle.addEventListener("click", async () => {
+      if (audio.paused) {
+        await startMusic();
+      } else {
         audio.pause();
-    }
-});
-
-stopButton.addEventListener("click", () => {
-    audio.pause();
-    audio.currentTime = 0;
-});
-
-restartButton.addEventListener("click", () => {
-    audio.currentTime = 0;
-    audio.play();
-});
-
-progress.addEventListener("input", () => {
-    if (audio.duration) {
-        audio.currentTime =
-            (progress.value / 100) * audio.duration;
-    }
-});
-
-volume.addEventListener("input", () => {
-    audio.volume = Number(volume.value);
-});
-
-audio.addEventListener("ended", () => {
-    audio.currentTime = 0;
-    audio.play();
-});
-
-// Attempt automatic playback on page load.
-window.addEventListener("load", () => {
-    audio.play().catch((error) => {
-        console.warn("Autoplay was blocked:", error);
+        updateMusicUI();
+      }
     });
-});
-</script>
 
+    volumeControl.addEventListener("input", () => {
+      audio.volume = Number(volumeControl.value);
+    });
+
+    audio.addEventListener("play", updateMusicUI);
+    audio.addEventListener("pause", updateMusicUI);
+
+    // Attempt autoplay when the page loads.
+    window.addEventListener("load", () => {
+      startMusic();
+    });
+  </script>
 </body>
 </html>
