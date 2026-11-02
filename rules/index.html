@@ -1,17 +1,16 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f5f7fb">
+  <meta name="theme-color" content="#0b1220">
   <meta name="description" content="Official community rules for Osiris Vanguard.">
   <title>Community Rules | Osiris Vanguard</title>
 
   <style>
     :root {
-      --background: #f5f7fb;
-      --card: #ffffff;
+      --background: #0b1220;
+      --card: rgba(255, 255, 255, 0.96);
       --text: #17191f;
       --muted: #707784;
       --accent: #356df3;
@@ -22,10 +21,24 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
+      min-height: 100vh;
       padding: 40px 18px;
-      background: var(--background);
+      background-color: var(--background);
+      background-image:
+        linear-gradient(
+          rgba(5, 10, 20, 0.58),
+          rgba(5, 10, 20, 0.78)
+        ),
+        url("../assets/background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Helvetica, Arial, sans-serif;
@@ -33,16 +46,17 @@
     }
 
     .container {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto;
     }
 
     .card {
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255, 255, 255, 0.35);
       border-radius: 22px;
       padding: 42px;
-      box-shadow: 0 8px 30px rgba(20, 30, 50, 0.04);
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(12px);
     }
 
     .brand {
@@ -83,10 +97,15 @@
       font-size: 14px;
     }
 
+    .notice strong {
+      letter-spacing: 0.5px;
+    }
+
     h2 {
       margin: 34px 0 12px;
       font-size: 20px;
       letter-spacing: -0.3px;
+      scroll-margin-top: 20px;
     }
 
     p {
@@ -111,6 +130,47 @@
       text-decoration: underline;
     }
 
+    .music-control {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      background: rgba(10, 16, 29, 0.88);
+      color: #ffffff;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+    }
+
+    .music-control button {
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .music-control button:hover {
+      color: #9bb9ff;
+    }
+
+    .music-label {
+      font-size: 12px;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
+    }
+
+    .volume-control {
+      width: 75px;
+      accent-color: #7da2ff;
+      cursor: pointer;
+    }
+
     .footer {
       margin-top: 34px;
       padding-top: 22px;
@@ -126,7 +186,8 @@
 
     @media (max-width: 600px) {
       body {
-        padding: 18px 12px;
+        padding: 18px 12px 100px;
+        background-attachment: scroll;
       }
 
       .card {
@@ -141,11 +202,19 @@
       h2 {
         font-size: 18px;
       }
+
+      .music-control {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <main class="container">
     <article class="card">
 
@@ -157,14 +226,14 @@
       <h1>Community Rules</h1>
 
       <p class="subtitle">
-        Official rules and guidelines for the Osiris Vanguard community.
+        Official rules and regulations for the Osiris Vanguard community.
       </p>
 
       <div class="notice">
         <strong>ONE UNIT. ONE MISSION.</strong><br>
-        By joining or participating in our community, you agree to follow
+        By joining or participating in Osiris Vanguard, you agree to follow
         these rules. These guidelines apply to all members, regardless of
-        rank, role, or membership status.
+        rank, role, membership status, or platform.
       </div>
 
       <h2>01. General Conduct</h2>
@@ -173,6 +242,8 @@
         <li>Harassment, bullying, discrimination, hate speech, and targeted abuse are prohibited.</li>
         <li>Do not provoke unnecessary arguments or deliberately disrupt the community.</li>
         <li>Respect the decisions of staff members and use the appropriate channels for disputes.</li>
+        <li>Do not encourage others to violate community rules.</li>
+        <li>Repeated disruptive behavior may result in moderation action.</li>
       </ul>
 
       <h2>02. Discord Communication</h2>
@@ -181,7 +252,9 @@
         <li>Spam, excessive mentions, message flooding, and disruptive behavior are prohibited.</li>
         <li>Do not impersonate members, staff, or other individuals.</li>
         <li>Do not post malicious links, suspicious files, or unauthorized advertisements.</li>
-        <li>Keep conversations appropriate for the community and follow Discord's Terms of Service.</li>
+        <li>Do not bypass channel restrictions or moderation actions.</li>
+        <li>Keep conversations appropriate for the community.</li>
+        <li>Follow Discord's Terms of Service and Community Guidelines.</li>
       </ul>
 
       <h2>03. Privacy & Security</h2>
@@ -189,7 +262,9 @@
         <li>Do not share another person's private or personal information without permission.</li>
         <li>Sharing private messages, staff discussions, or restricted information without authorization is prohibited.</li>
         <li>Never request or share passwords, account credentials, or authentication codes.</li>
+        <li>Do not distribute malicious software, phishing links, or suspicious downloads.</li>
         <li>Report security concerns or suspicious activity to staff.</li>
+        <li>Do not attempt to access accounts, channels, or systems without authorization.</li>
       </ul>
 
       <h2>04. Facility Roleplay</h2>
@@ -199,21 +274,220 @@
         <li>Do not abuse glitches, bugs, or unintended game mechanics for an unfair advantage.</li>
         <li>Do not intentionally disrupt roleplay sessions, events, or other players' experiences.</li>
         <li>Follow faction procedures and instructions given by authorized leaders during official activities.</li>
+        <li>Do not engage in unauthorized team-killing, spawn-killing, or intentional team disruption.</li>
+        <li>Do not abuse game mechanics to avoid legitimate consequences.</li>
+        <li>Report serious bugs or exploits to the appropriate staff members.</li>
       </ul>
 
-      <h2>05. Applications & Membership</h2>
+      <h2>05. Rank, Authority & Leadership</h2>
+      <ul>
+        <li>Ranks and permissions must be used only for their intended purposes.</li>
+        <li>Do not abuse authority to threaten, harass, or unfairly punish members.</li>
+        <li>Do not claim a rank, position, or permission that you have not been granted.</li>
+        <li>Do not interfere with another authorized leader's responsibilities without a valid reason.</li>
+        <li>Leadership decisions should be made fairly and in accordance with community standards.</li>
+        <li>Report suspected rank or permission abuse through the appropriate channels.</li>
+      </ul>
+
+      <h2>06. Applications & Membership</h2>
       <ul>
         <li>Provide accurate and honest information in applications.</li>
         <li>Do not plagiarize, falsify credentials, or misrepresent your experience.</li>
         <li>Do not pressure staff to approve applications or bypass the review process.</li>
+        <li>Do not submit repeated applications to avoid a pending review or rejection.</li>
         <li>Membership, rank, and access may be reviewed if a member violates community standards.</li>
+        <li>Application decisions must be respected. Appeals may be submitted through designated channels.</li>
       </ul>
 
-      <h2>06. Staff & Moderation</h2>
+      <h2>07. Events & Operations</h2>
+      <ul>
+        <li>Follow the instructions provided by event hosts and authorized leaders.</li>
+        <li>Arrive on time when attendance is required.</li>
+        <li>Do not disrupt briefings, formations, training sessions, or official operations.</li>
+        <li>Do not falsely claim attendance or completion of an event.</li>
+        <li>Do not share restricted operation details outside authorized channels.</li>
+        <li>Follow event-specific rules in addition to these community rules.</li>
+        <li>Event hosts may remove participants who repeatedly disrupt the activity.</li>
+      </ul>
+
+      <h2>08. Voice Channels</h2>
+      <ul>
+        <li>Do not use disruptive audio, soundboards, or microphone spam.</li>
+        <li>Do not interrupt official briefings, meetings, or events.</li>
+        <li>Respect other members and follow channel-specific instructions.</li>
+        <li>Do not record or distribute private conversations without appropriate permission.</li>
+        <li>Keep communication clear and relevant during official activities.</li>
+      </ul>
+
+      <h2>09. Advertising & External Content</h2>
+      <ul>
+        <li>Unauthorized advertising, recruitment, or promotion is prohibited.</li>
+        <li>Do not promote competing communities in restricted channels.</li>
+        <li>External links must be safe, relevant, and permitted by the server rules.</li>
+        <li>Do not distribute stolen content or content that violates another person's rights.</li>
+        <li>Obtain staff approval before organizing official partnerships or promotional activities.</li>
+      </ul>
+
+      <h2>10. Reports & Evidence</h2>
+      <ul>
+        <li>Submit reports through the designated reporting channels.</li>
+        <li>Provide accurate information and relevant evidence when reporting a violation.</li>
+        <li>Do not fabricate, manipulate, or knowingly misrepresent evidence.</li>
+        <li>Do not use reports to harass, threaten, or target another member.</li>
+        <li>False or malicious reports may result in moderation action.</li>
+        <li>Do not publicly expose private investigations or restricted staff discussions.</li>
+      </ul>
+
+      <h2>11. Staff & Moderation</h2>
       <ul>
         <li>Follow reasonable instructions from authorized staff members.</li>
         <li>Do not impersonate staff or claim authority you do not have.</li>
         <li>Do not interfere with moderation actions or encourage others to do so.</li>
         <li>If you disagree with a moderation decision, submit a respectful appeal through the designated channel.</li>
         <li>Staff members are expected to act fairly and responsibly.</li>
-      </ul
+        <li>Staff permissions must not be used for personal disputes or retaliation.</li>
+        <li>Moderation discussions should remain confidential when designated as private.</li>
+      </ul>
+
+      <h2>12. Partnerships & Representation</h2>
+      <ul>
+        <li>Only authorized representatives may make official statements on behalf of Osiris Vanguard.</li>
+        <li>Do not promise partnerships, ranks, or benefits without proper authorization.</li>
+        <li>Do not misrepresent the community's position, leadership, or policies.</li>
+        <li>Official announcements must be shared through approved channels.</li>
+      </ul>
+
+      <h2>13. Rule Evasion & Alternate Accounts</h2>
+      <ul>
+        <li>Do not use alternate accounts to evade bans, timeouts, or other moderation actions.</li>
+        <li>Do not assist another member in bypassing a restriction.</li>
+        <li>Do not use multiple accounts to manipulate votes, applications, events, or community activity.</li>
+        <li>Staff may review suspected evasion when supported by relevant information.</li>
+      </ul>
+
+      <h2>14. Enforcement</h2>
+      <p>
+        Violations may result in moderation action depending on their
+        severity, frequency, intent, and impact on the community.
+      </p>
+
+      <ul>
+        <li>Verbal or written warning</li>
+        <li>Message removal</li>
+        <li>Timeout or temporary restriction</li>
+        <li>Removal of roles or membership privileges</li>
+        <li>Removal from an event or operation</li>
+        <li>Temporary suspension or permanent removal from the community</li>
+      </ul>
+
+      <p>
+        Serious violations may result in immediate action without a prior warning.
+        Staff may consider the circumstances of each incident.
+      </p>
+
+      <h2>15. Appeals</h2>
+      <ul>
+        <li>Members may appeal moderation actions through designated channels.</li>
+        <li>Appeals must be respectful, relevant, and supported by accurate information.</li>
+        <li>Do not spam staff or repeatedly submit the same appeal while it is under review.</li>
+        <li>Submitting an appeal does not guarantee that a moderation action will be reversed.</li>
+        <li>Staff decisions may be reviewed when new relevant evidence is provided.</li>
+      </ul>
+
+      <h2>16. Final Notice</h2>
+      <p>
+        These rules are intended to maintain a safe, organized, and respectful
+        environment for all members. Osiris Vanguard reserves the right to
+        update these guidelines when necessary.
+      </p>
+
+      <p>
+        Members are responsible for staying informed about the current rules.
+        Continued participation in the community indicates acceptance of
+        these guidelines.
+      </p>
+
+      <div class="footer">
+        <strong>⌬ OSIRIS VANGUARD</strong><br>
+        ONE UNIT. ONE MISSION.<br>
+        <span>Community Rules</span>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- Background Music -->
+  <audio id="bgm" autoplay loop preload="auto">
+    <source src="../assets/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music Player -->
+  <div class="music-control">
+    <button id="musicButton" type="button">♫ Play Music</button>
+    <span class="music-label" id="musicStatus">OSIRIS BGM</span>
+    <input
+      class="volume-control"
+      id="volumeControl"
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      value="0.35"
+      aria-label="Music volume"
+    >
+  </div>
+
+  <script>
+    const bgm = document.getElementById("bgm");
+    const musicButton = document.getElementById("musicButton");
+    const musicStatus = document.getElementById("musicStatus");
+    const volumeControl = document.getElementById("volumeControl");
+
+    bgm.volume = 0.35;
+
+    function updateMusicButton() {
+      if (bgm.paused) {
+        musicButton.textContent = "♫ Play Music";
+        musicStatus.textContent = "MUSIC PAUSED";
+      } else {
+        musicButton.textContent = "♫ Pause Music";
+        musicStatus.textContent = "OSIRIS BGM";
+      }
+    }
+
+    async function startMusic() {
+      try {
+        await bgm.play();
+        updateMusicButton();
+      } catch (error) {
+        musicButton.textContent = "♫ Enable Music";
+        musicStatus.textContent = "AUTOPLAY BLOCKED";
+      }
+    }
+
+    musicButton.addEventListener("click", async () => {
+      if (bgm.paused) {
+        await startMusic();
+      } else {
+        bgm.pause();
+        updateMusicButton();
+      }
+    });
+
+    volumeControl.addEventListener("input", () => {
+      bgm.volume = Number(volumeControl.value);
+    });
+
+    window.addEventListener("load", () => {
+      startMusic();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && bgm.paused) {
+        startMusic();
+      }
+    });
+  </script>
+
+</body>
+</html>
