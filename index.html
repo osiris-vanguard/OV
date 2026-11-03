@@ -2,1315 +2,1348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#171a16">
-  <meta name="description" content="Official OSIRIS VANGUARD faction headquarters.">
-
-  <title>Osiris Vanguard | Official Headquarters</title>
-
-  <style>
-    :root {
-      --bg: #111510;
-      --panel: rgba(20, 24, 19, 0.72);
-      --panel-light: rgba(32, 38, 29, 0.78);
-      --border: rgba(130, 145, 110, 0.28);
-      --olive: #899875;
-      --olive-light: #b5c29f;
-      --red: #8b3434;
-      --text: #d5d9d1;
-      --muted: #92998e;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      line-height: 1.7;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-
-      background:
-        linear-gradient(
-          rgba(9, 12, 9, 0.58),
-          rgba(9, 12, 9, 0.72)
-        ),
-        url("assets/background.jpg") center / cover no-repeat;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-
-      background: radial-gradient(
-        ellipse at center,
-        transparent 35%,
-        rgba(0, 0, 0, 0.35) 100%
-      );
-    }
-
-    a {
-      color: var(--olive-light);
-    }
-
-    /* TOP BAR */
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-
-      padding: 14px 6%;
-
-      background: rgba(12, 15, 12, 0.82);
-      border-bottom: 1px solid var(--border);
-
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .brand {
-      color: #e2e6dc;
-
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 2px;
-
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-
-    .brand span {
-      color: var(--olive);
-    }
-
-    .status {
-      color: var(--muted);
-
-      font-size: 11px;
-      letter-spacing: 1.5px;
-
-      text-transform: uppercase;
-    }
-
-    /* HERO */
-
-    .hero {
-      max-width: 1050px;
-
-      margin: 75px auto 40px;
-      padding: 0 24px;
-
-      text-align: center;
-    }
-
-    .eyebrow {
-      color: var(--olive-light);
-
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 4px;
-
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 12px 0;
-
-      color: #edf0e8;
-
-      font-size: clamp(32px, 6vw, 58px);
-      line-height: 1.15;
-      letter-spacing: 2px;
-
-      text-transform: uppercase;
-    }
-
-    .hero p {
-      max-width: 650px;
-
-      margin: 16px auto;
-
-      color: #b2b8ad;
-      font-size: 14px;
-    }
-
-    .hero-line {
-      width: 80px;
-      height: 2px;
-
-      margin: 25px auto;
-
-      background: var(--olive);
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-
-      margin-top: 28px;
-    }
-
-    .action-button {
-      display: inline-block;
-
-      padding: 10px 22px;
-
-      color: #e1e5dc;
-
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-
-      text-decoration: none;
-      text-transform: uppercase;
-
-      background: rgba(130, 145, 110, 0.12);
-      border: 1px solid var(--border);
-
-      transition: 0.2s;
-    }
-
-    .action-button.primary {
-      color: #111510;
-
-      background: var(--olive-light);
-      border-color: var(--olive-light);
-    }
-
-    .action-button:hover {
-      background: rgba(130, 145, 110, 0.25);
-      border-color: var(--olive-light);
-    }
-
-    .action-button.primary:hover {
-      background: var(--olive);
-    }
-
-    /* MAIN LAYOUT */
-
-    .container {
-      display: grid;
-
-      grid-template-columns: 230px minmax(0, 1fr);
-      align-items: start;
-      gap: 24px;
-
-      max-width: 1150px;
-
-      margin: 0 auto 90px;
-      padding: 0 24px;
-    }
-
-    .sidebar,
-    .panel,
-    .notice,
-    .menu-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      position: sticky;
-      top: 82px;
-
-      padding: 18px;
-
-      border-radius: 5px;
-    }
-
-    .sidebar-title {
-      margin: 0 0 12px;
-
-      color: var(--olive-light);
-
-      font-size: 11px;
-      letter-spacing: 2px;
-
-      text-transform: uppercase;
-    }
-
-    .sidebar a {
-      display: block;
-
-      padding: 8px 10px;
-
-      color: #aeb5a8;
-
-      font-size: 12px;
-
-      text-decoration: none;
-
-      border-left: 2px solid transparent;
-
-      transition: 0.2s;
-    }
-
-    .sidebar a:hover {
-      color: #edf0e8;
-
-      background: rgba(130, 145, 110, 0.1);
-
-      border-left-color: var(--olive);
-    }
-
-    .content {
-      min-width: 0;
-    }
-
-    /* NOTICE */
-
-    .notice {
-      margin-bottom: 18px;
-      padding: 18px 22px;
-
-      border-left: 3px solid var(--red);
-      border-radius: 4px;
-    }
-
-    .notice strong {
-      display: block;
-
-      margin-bottom: 4px;
-
-      color: #dba5a0;
-
-      font-size: 12px;
-      letter-spacing: 1.5px;
-
-      text-transform: uppercase;
-    }
-
-    .notice p {
-      margin: 0;
-
-      color: #c2c7bd;
-
-      font-size: 13px;
-    }
-
-    /* PANELS */
-
-    .panel {
-      margin-bottom: 18px;
-      padding: 24px;
-
-      border-radius: 5px;
-
-      scroll-margin-top: 90px;
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-
-      margin-bottom: 16px;
-      padding-bottom: 13px;
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .panel-number {
-      display: grid;
-
-      flex: 0 0 38px;
-
-      width: 38px;
-      height: 38px;
-
-      place-items: center;
-
-      color: var(--olive-light);
-
-      font-size: 12px;
-      font-weight: 800;
-
-      background: rgba(130, 145, 110, 0.12);
-
-      border: 1px solid var(--border);
-    }
-
-    h2 {
-      margin: 0;
-
-      color: #e1e5dc;
-
-      font-size: 17px;
-      letter-spacing: 0.5px;
-    }
-
-    h3 {
-      margin: 0;
-
-      color: #e1e5dc;
-
-      font-size: 13px;
-      letter-spacing: 1px;
-    }
-
-    .panel p {
-      margin: 8px 0;
-
-      color: #c0c6bb;
-
-      font-size: 13px;
-    }
-
-    .panel strong {
-      color: #e1e5dc;
-    }
-
-    /* STATUS CARDS */
-
-    .stats-grid {
-      display: grid;
-
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-
-      margin-top: 18px;
-    }
-
-    .stat-box {
-      padding: 16px;
-
-      background: var(--panel-light);
-      border: 1px solid var(--border);
-
-      text-align: center;
-    }
-
-    .stat-value {
-      color: var(--olive-light);
-
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .stat-label {
-      color: var(--muted);
-
-      font-size: 10px;
-      letter-spacing: 1px;
-
-      text-transform: uppercase;
-    }
-
-    /* DIRECTORY */
-
-    .menu-grid {
-      display: grid;
-
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .menu-card {
-      display: block;
-
-      min-width: 0;
-      padding: 20px;
-
-      color: var(--text);
-
-      text-decoration: none;
-
-      border-radius: 4px;
-
-      transition: 0.2s;
-    }
-
-    .menu-card:hover {
-      background: var(--panel-light);
-
-      border-color: var(--olive);
-
-      transform: translateY(-2px);
-    }
-
-    .menu-code {
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: var(--olive-light);
-
-      font-size: 10px;
-      letter-spacing: 2px;
-    }
-
-    .menu-card h3 {
-      margin-bottom: 8px;
-
-      font-size: 14px;
-
-      text-transform: uppercase;
-    }
-
-    .menu-card p {
-      margin: 0;
-
-      color: #aeb5a8;
-
-      font-size: 12px;
-    }
-
-    .menu-arrow {
-      display: block;
-
-      margin-top: 14px;
-
-      color: var(--olive-light);
-
-      font-size: 11px;
-      letter-spacing: 1px;
-
-      text-transform: uppercase;
-    }
-
-    /* RECRUITMENT */
-
-    .recruitment-box {
-      padding: 20px;
-
-      background: rgba(130, 145, 110, 0.08);
-
-      border: 1px solid var(--border);
-    }
-
-    .recruitment-status {
-      display: inline-block;
-
-      margin-bottom: 12px;
-      padding: 4px 9px;
-
-      color: var(--olive-light);
-
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-
-      text-transform: uppercase;
-
-      background: rgba(130, 145, 110, 0.12);
-
-      border: 1px solid var(--border);
-    }
-
-    .recruitment-box p {
-      margin-bottom: 16px;
-    }
-
-    /* FOOTER */
-
-    .footer {
-      padding: 30px 20px 110px;
-
-      color: var(--muted);
-
-      font-size: 11px;
-      letter-spacing: 1px;
-
-      text-align: center;
-
-      text-transform: uppercase;
-    }
-
-    .footer strong {
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: var(--olive-light);
-
-      font-size: 13px;
-      letter-spacing: 3px;
-    }
-
-    /* MUSIC PLAYER */
-
-    .music-player {
-      position: fixed;
-
-      right: 20px;
-      bottom: 20px;
-
-      z-index: 20;
-
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      width: min(370px, calc(100vw - 40px));
-
-      padding: 13px 15px;
-
-      background: rgba(15, 19, 14, 0.92);
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    .music-cover {
-      flex: 0 0 48px;
-
-      width: 48px;
-      height: 48px;
-
-      object-fit: cover;
-
-      background: rgba(130, 145, 110, 0.13);
-
-      border: 1px solid var(--border);
-    }
-
-    .music-info {
-      flex: 1;
-
-      min-width: 0;
-    }
-
-    .music-title {
-      overflow: hidden;
-
-      color: #e1e5dc;
-
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .music-subtitle {
-      overflow: hidden;
-
-      color: var(--muted);
-
-      font-size: 10px;
-
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .music-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .music-controls button {
-      width: 32px;
-      height: 32px;
-
-      color: var(--olive-light);
-
-      background: rgba(130, 145, 110, 0.12);
-
-      border: 1px solid var(--border);
-      border-radius: 3px;
-
-      cursor: pointer;
-    }
-
-    .music-controls button:hover {
-      background: rgba(130, 145, 110, 0.25);
-    }
-
-    input[type="range"] {
-      width: 65px;
-
-      accent-color: var(--olive-light);
-
-      cursor: pointer;
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 800px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-      }
-
-      .sidebar nav {
-        display: grid;
-
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        gap: 2px;
-      }
-
-      .hero {
-        margin-top: 45px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .topbar {
-        padding: 12px 16px;
-      }
-
-      .status {
-        font-size: 9px;
-      }
-
-      .container {
-        padding: 0 14px;
-      }
-
-      .panel {
-        padding: 18px;
-      }
-
-      .menu-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .stats-grid {
-        gap: 8px;
-      }
-
-      .stat-box {
-        padding: 12px 6px;
-      }
-
-      .stat-value {
-        font-size: 17px;
-      }
-
-      .music-player {
-        right: 10px;
-        bottom: 10px;
-
-        width: calc(100vw - 20px);
-      }
-
-      input[type="range"] {
-        width: 48px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171a16">
+<meta name="description" content="Official OSIRIS VANGUARD faction headquarters.">
+<title>OSIRIS VANGUARD | Official Headquarters</title>
+
+<style>
+:root {
+  --bg: #111510;
+  --panel: rgba(20,24,19,.82);
+  --panel2: rgba(32,38,29,.82);
+  --border: rgba(130,145,110,.28);
+  --olive: #899875;
+  --olive-light: #b5c29f;
+  --text: #d5d9d1;
+  --muted: #92998e;
+  --red: #8b3434;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  line-height: 1.65;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(rgba(9,12,9,.68),rgba(9,12,9,.78)),
+    url("assets/background.jpg") center/cover no-repeat;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.35));
+}
+
+a { color: var(--olive-light); }
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* HEADER */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 6%;
+  background: rgba(12,15,12,.88);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.brand {
+  color: #e2e6dc;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.brand span { color: var(--olive); }
+
+.header-status {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* NAV */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px 16px;
+  background: rgba(15,18,14,.78);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar button {
+  padding: 8px 13px;
+  color: #aeb5a8;
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.navbar button:hover,
+.navbar button.active {
+  color: #e1e5dc;
+  background: rgba(130,145,110,.13);
+  border-color: var(--border);
+}
+
+/* HERO */
+
+.hero {
+  max-width: 1000px;
+  margin: 65px auto 35px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--olive-light);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 12px 0;
+  color: #edf0e8;
+  font-size: clamp(32px,6vw,58px);
+  line-height: 1.15;
+  letter-spacing: 2px;
+}
+
+.hero-line {
+  width: 80px;
+  height: 2px;
+  margin: 24px auto;
+  background: var(--olive);
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 16px auto;
+  color: #b2b8ad;
+  font-size: 14px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  color: #e1e5dc;
+  background: rgba(130,145,110,.12);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn:hover {
+  background: rgba(130,145,110,.25);
+  border-color: var(--olive-light);
+}
+
+.btn.primary {
+  color: #111510;
+  background: var(--olive-light);
+  border-color: var(--olive-light);
+}
+
+.btn.primary:hover { background: var(--olive); }
+
+.btn.danger {
+  color: #e3b5b0;
+  border-color: rgba(139,52,52,.5);
+}
+
+/* LAYOUT */
+
+.container {
+  display: grid;
+  grid-template-columns: 220px minmax(0,1fr);
+  gap: 22px;
+  align-items: start;
+  max-width: 1150px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
+.sidebar, .panel, .notice, .card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar {
+  position: sticky;
+  top: 120px;
+  padding: 18px;
+  border-radius: 4px;
+}
+
+.sidebar h3 {
+  margin: 0 0 12px;
+  color: var(--olive-light);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  padding: 9px 10px;
+  color: #aeb5a8;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  color: #edf0e8;
+  background: rgba(130,145,110,.1);
+  border-left-color: var(--olive);
+}
+
+.content { min-width: 0; }
+
+.panel {
+  margin-bottom: 18px;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 17px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-number {
+  display: grid;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: var(--olive-light);
+  background: rgba(130,145,110,.12);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.panel h2 {
+  margin: 0;
+  color: #e1e5dc;
+  font-size: 17px;
+}
+
+.panel h3 {
+  margin: 0 0 8px;
+  color: #e1e5dc;
+  font-size: 13px;
+  letter-spacing: .5px;
+}
+
+.panel p {
+  margin: 8px 0;
+  color: #c0c6bb;
+  font-size: 13px;
+}
+
+.notice {
+  margin-bottom: 18px;
+  padding: 17px 20px;
+  border-left: 3px solid var(--red);
+}
+
+.notice strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #dba5a0;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.notice p {
+  margin: 0;
+  color: #c2c7bd;
+  font-size: 13px;
+}
+
+/* CARDS */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 13px;
+}
+
+.card {
+  min-width: 0;
+  padding: 19px;
+  border-radius: 3px;
+}
+
+.card:hover {
+  border-color: rgba(181,194,159,.5);
+}
+
+.card-code {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--olive-light);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.card p {
+  margin: 0;
+  color: #aeb5a8;
+  font-size: 12px;
+}
+
+.card-link {
+  display: block;
+  margin-top: 13px;
+  color: var(--olive-light);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* STATISTICS */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.stat {
+  padding: 15px 8px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  color: var(--olive-light);
+  font-size: 19px;
+  letter-spacing: 1px;
+}
+
+.stat span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* TABLE */
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+th {
+  color: var(--olive-light);
+  background: rgba(130,145,110,.1);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+th, td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+td { color: #c0c6bb; }
+
+.badge {
+  display: inline-block;
+  padding: 3px 7px;
+  color: var(--olive-light);
+  background: rgba(130,145,110,.12);
+  border: 1px solid var(--border);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+/* FORMS */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  color: var(--olive-light);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 11px;
+  color: var(--text);
+  background: rgba(8,11,8,.65);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  outline: none;
+  font-size: 12px;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--olive-light);
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.field select option {
+  color: var(--text);
+  background: var(--bg);
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* PAGE NAVIGATION */
+
+.page { display: none; }
+
+.page.active { display: block; }
+
+/* FOOTER */
+
+.footer {
+  padding: 30px 20px 110px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.footer strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--olive-light);
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+
+/* MUSIC */
+
+.music-player {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: min(360px,calc(100vw - 36px));
+  padding: 12px;
+  background: rgba(13,17,12,.94);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.3);
+}
+
+.music-cover {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+}
+
+.music-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.music-title {
+  overflow: hidden;
+  color: #e1e5dc;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-status {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.music-controls button {
+  width: 31px;
+  height: 31px;
+  color: var(--olive-light);
+  background: rgba(130,145,110,.12);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.music-controls input {
+  width: 58px;
+  accent-color: var(--olive-light);
+  cursor: pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:800px) {
+  .container { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+  .hero { margin-top: 42px; }
+}
+
+@media(max-width:500px) {
+  .topbar { padding: 12px 15px; }
+  .header-status { font-size: 8px; }
+  .container { padding: 0 13px; }
+  .panel { padding: 17px; }
+  .grid { grid-template-columns: 1fr; }
+  .stats { gap: 7px; }
+  .stat strong { font-size: 16px; }
+  .navbar { gap: 2px; }
+  .navbar button { padding: 7px 9px; font-size: 9px; }
+  .music-player { right: 9px; bottom: 9px; width: calc(100vw - 18px); }
+  .music-controls input { width: 43px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
+<header class="topbar">
+  <a class="brand" href="#home" onclick="showPage('home')">
+    OSIRIS <span>VANGUARD</span>
+  </a>
+  <div class="header-status">Official Headquarters // OV-01</div>
+</header>
 
-  <header class="topbar">
-    <a class="brand" href="./">
-      OSIRIS <span>VANGUARD</span>
+<nav class="navbar" aria-label="Main navigation">
+  <button class="active" data-page="home">Home</button>
+  <button data-page="recruitment">Recruitment</button>
+  <button data-page="personnel">Personnel</button>
+  <button data-page="command">Command</button>
+  <button data-page="operations">Operations</button>
+  <button data-page="intelligence">Intelligence</button>
+  <button data-page="rules">Rules</button>
+</nav>
+
+<!-- HOME -->
+
+<main id="home" class="page active">
+
+<section class="hero">
+  <div class="eyebrow">Official Faction Headquarters</div>
+  <h1>OSIRIS VANGUARD</h1>
+  <div class="hero-line"></div>
+  <p>
+    A disciplined faction built on unity, coordination, and operational
+    excellence. Welcome to the official headquarters of Osiris Vanguard.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn primary" onclick="showPage('recruitment')">
+      Join the Vanguard
+    </button>
+
+    <a class="btn" href="https://discord.com/" target="_blank" rel="noopener">
+      Discord
     </a>
 
-    <div class="status">
-      Official Headquarters // OV-01
+    <button class="btn" onclick="showPage('rules')">
+      Regulations
+    </button>
+  </div>
+</section>
+
+<div class="container">
+
+<aside class="sidebar">
+  <h3>Headquarters Index</h3>
+  <nav>
+    <button onclick="showPage('home')">01 // Overview</button>
+    <button onclick="showPage('recruitment')">02 // Recruitment</button>
+    <button onclick="showPage('personnel')">03 // Personnel</button>
+    <button onclick="showPage('command')">04 // Command</button>
+    <button onclick="showPage('operations')">05 // Operations</button>
+    <button onclick="showPage('intelligence')">06 // Intelligence</button>
+    <button onclick="showPage('rules')">07 // Regulations</button>
+  </nav>
+</aside>
+
+<div class="content">
+
+<div class="notice">
+  <strong>Headquarters Notice // 001</strong>
+  <p>
+    Welcome to the official OSIRIS VANGUARD headquarters.
+    Important faction announcements and updates will be published here.
+  </p>
+</div>
+
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Faction Overview</h2>
+  </div>
+
+  <p>
+    <strong>OSIRIS VANGUARD</strong> is a faction-oriented community
+    focused on teamwork, discipline, and coordinated operations.
+    Members are expected to uphold the faction's standards and represent
+    the unit with professionalism.
+  </p>
+
+  <div class="stats">
+    <div class="stat">
+      <strong>OV</strong>
+      <span>Unit Designation</span>
     </div>
-  </header>
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <div class="eyebrow">
-      Official Faction Headquarters
+    <div class="stat">
+      <strong>UNITY</strong>
+      <span>Core Principle</span>
     </div>
-
-    <h1>
-      Osiris Vanguard
-    </h1>
-
-    <div class="hero-line"></div>
-
-    <p>
-      A disciplined faction built on unity, coordination, and operational
-      excellence. Welcome to the official headquarters of Osiris Vanguard.
-    </p>
-
-    <div class="hero-actions">
-
-      <a class="action-button primary" href="#recruitment">
-        Join the Vanguard
-      </a>
-
-      <a class="action-button" href="Rules/">
-        View Regulations
-      </a>
-
+    <div class="stat">
+      <strong>ACTIVE</strong>
+      <span>Headquarters</span>
     </div>
-
-  </section>
-
-  <!-- MAIN CONTENT -->
-
-  <main class="container">
-
-    <!-- SIDEBAR -->
-
-    <aside class="sidebar">
-
-      <h3 class="sidebar-title">
-        Headquarters Index
-      </h3>
-
-      <nav>
-
-        <a href="#overview">
-          01 // Overview
-        </a>
-
-        <a href="#announcements">
-          02 // Announcements
-        </a>
-
-        <a href="#directory">
-          03 // Directory
-        </a>
-
-        <a href="#recruitment">
-          04 // Recruitment
-        </a>
-
-        <a href="Rules/">
-          05 // Rules & Regulations
-        </a>
-
-        <a href="#motto">
-          06 // Faction Motto
-        </a>
-
-      </nav>
-
-    </aside>
-
-    <!-- CONTENT -->
-
-    <div class="content">
-
-      <!-- ANNOUNCEMENT -->
-
-      <div class="notice" id="announcements">
-
-        <strong>
-          Headquarters Notice // 001
-        </strong>
-
-        <p>
-          Welcome to the official OSIRIS VANGUARD headquarters.
-          Important faction announcements and updates will be published here.
-        </p>
-
-      </div>
-
-      <!-- OVERVIEW -->
-
-      <section class="panel" id="overview">
-
-        <div class="panel-heading">
-
-          <div class="panel-number">
-            01
-          </div>
-
-          <h2>
-            Faction Overview
-          </h2>
-
-        </div>
-
-        <p>
-          <strong>OSIRIS VANGUARD</strong> is a faction-oriented community
-          focused on teamwork, discipline, and coordinated operations.
-          Members are expected to uphold the faction's standards and represent
-          the unit with professionalism.
-        </p>
-
-        <div class="stats-grid">
-
-          <div class="stat-box">
-
-            <div class="stat-value">
-              OV
-            </div>
-
-            <div class="stat-label">
-              Unit Designation
-            </div>
-
-          </div>
-
-          <div class="stat-box">
-
-            <div class="stat-value">
-              UNITY
-            </div>
-
-            <div class="stat-label">
-              Core Principle
-            </div>
-
-          </div>
-
-          <div class="stat-box">
-
-            <div class="stat-value">
-              ACTIVE
-            </div>
-
-            <div class="stat-label">
-              Headquarters
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- DIRECTORY -->
-
-      <section class="panel" id="directory">
-
-        <div class="panel-heading">
-
-          <div class="panel-number">
-            02
-          </div>
-
-          <h2>
-            Faction Directory
-          </h2>
-
-        </div>
-
-        <p>
-          Access the faction's official information sections through the
-          directory below.
-        </p>
-
-        <div class="menu-grid">
-
-          <a class="menu-card" href="Rules/">
-
-            <span class="menu-code">
-              DIRECTIVE // 01
-            </span>
-
-            <h3>
-              Rules & Regulations
-            </h3>
-
-            <p>
-              Official conduct standards and faction regulations.
-            </p>
-
-            <span class="menu-arrow">
-              Access Regulations →
-            </span>
-
-          </a>
-
-          <a class="menu-card" href="Recruitment/">
-
-            <span class="menu-code">
-              PERSONNEL // 02
-            </span>
-
-            <h3>
-              Recruitment
-            </h3>
-
-            <p>
-              Recruitment information and application procedures.
-            </p>
-
-            <span class="menu-arrow">
-              View Recruitment →
-            </span>
-
-          </a>
-
-          <a class="menu-card" href="Personnel/">
-
-            <span class="menu-code">
-              ROSTER // 03
-            </span>
-
-            <h3>
-              Personnel Directory
-            </h3>
-
-            <p>
-              Faction personnel and member directory.
-            </p>
-
-            <span class="menu-arrow">
-              Open Directory →
-            </span>
-
-          </a>
-
-          <a class="menu-card" href="Command/">
-
-            <span class="menu-code">
-              COMMAND // 04
-            </span>
-
-            <h3>
-              Command Structure
-            </h3>
-
-            <p>
-              Leadership, ranks, and organizational structure.
-            </p>
-
-            <span class="menu-arrow">
-              View Structure →
-            </span>
-
-          </a>
-
-          <a class="menu-card" href="Operations/">
-
-            <span class="menu-code">
-              FIELD // 05
-            </span>
-
-            <h3>
-              Operations
-            </h3>
-
-            <p>
-              Operational records, briefings, and activity updates.
-            </p>
-
-            <span class="menu-arrow">
-              Access Operations →
-            </span>
-
-          </a>
-
-          <a class="menu-card" href="Intelligence/">
-
-            <span class="menu-code">
-              ARCHIVE // 06
-            </span>
-
-            <h3>
-              Intelligence Archive
-            </h3>
-
-            <p>
-              Faction reference materials and intelligence records.
-            </p>
-
-            <span class="menu-arrow">
-              Open Archive →
-            </span>
-
-          </a>
-
-        </div>
-
-      </section>
-
-      <!-- RECRUITMENT -->
-
-      <section class="panel" id="recruitment">
-
-        <div class="panel-heading">
-
-          <div class="panel-number">
-            03
-          </div>
-
-          <h2>
-            Recruitment Office
-          </h2>
-
-        </div>
-
-        <div class="recruitment-box">
-
-          <span class="recruitment-status">
-            Recruitment Information
-          </span>
-
-          <h3>
-            Join Osiris Vanguard
-          </h3>
-
-          <p>
-            Interested in becoming part of Osiris Vanguard?
-            Review the recruitment requirements and application process
-            before applying.
-          </p>
-
-          <a class="action-button primary" href="Recruitment/">
-            Recruitment Details
-          </a>
-
-        </div>
-
-      </section>
-
-      <!-- MOTTO -->
-
-      <section class="panel" id="motto">
-
-        <div class="panel-heading">
-
-          <div class="panel-number">
-            04
-          </div>
-
-          <h2>
-            Faction Motto
-          </h2>
-
-        </div>
-
-        <p style="
-          color: var(--olive-light);
-          font-weight: 800;
-          letter-spacing: 3px;
-        ">
-          ONE CREW. ONE FAMILY.
-        </p>
-
-        <p>
-          Unity is our foundation. Discipline is our standard.
-          Every member contributes to the strength of the Vanguard.
-        </p>
-
-      </section>
-
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">02</div>
+    <h2>Headquarters Directory</h2>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <span class="card-code">PERSONNEL // 01</span>
+      <h3>Personnel Directory</h3>
+      <p>Faction members and roster information.</p>
+      <button class="btn" onclick="showPage('personnel')">Open</button>
     </div>
 
-  </main>
-
-  <!-- FOOTER -->
-
-  <footer class="footer">
-
-    <strong>
-      ONE CREW. ONE FAMILY.
-    </strong>
-
-    OSIRIS VANGUARD // OFFICIAL FACTION HEADQUARTERS
-
-  </footer>
-
-  <!-- MUSIC PLAYER -->
-
-  <div class="music-player" aria-label="Background music player">
-
-    <img
-      class="music-cover"
-      src="assets/ascend-cover.jpg"
-      alt="Kevin Graham - Ascend cover art"
-    >
-
-    <div class="music-info">
-
-      <div class="music-title">
-        KEVIN GRAHAM — ASCEND
-      </div>
-
-      <div class="music-subtitle" id="musicStatus">
-        OSIRIS AMBIENCE // INITIALIZING
-      </div>
-
+    <div class="card">
+      <span class="card-code">COMMAND // 02</span>
+      <h3>Command Structure</h3>
+      <p>Leadership, departments, and rank structure.</p>
+      <button class="btn" onclick="showPage('command')">Open</button>
     </div>
 
-    <div class="music-controls">
+    <div class="card">
+      <span class="card-code">FIELD // 03</span>
+      <h3>Operations</h3>
+      <p>Operational records and mission briefings.</p>
+      <button class="btn" onclick="showPage('operations')">Open</button>
+    </div>
 
-      <button
-        id="musicToggle"
-        type="button"
-        aria-label="Play or pause background music"
-      >
-        ▶
-      </button>
-
-      <input
-        id="volumeControl"
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        value="0.07"
-        aria-label="Music volume"
-      >
-
+    <div class="card">
+      <span class="card-code">ARCHIVE // 04</span>
+      <h3>Intelligence Archive</h3>
+      <p>Faction reference materials and records.</p>
+      <button class="btn" onclick="showPage('intelligence')">Open</button>
     </div>
 
   </div>
+</section>
 
-  <!-- AUDIO -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">03</div>
+    <h2>Recruitment Office</h2>
+  </div>
 
-  <audio
-    id="backgroundMusic"
-    src="assets/bgm.mp3"
-    loop
-    preload="auto"
-    autoplay
-  ></audio>
+  <p>
+    Interested in joining Osiris Vanguard?
+    Review the recruitment information and submit an application.
+  </p>
 
-  <!-- SCRIPT -->
+  <button class="btn primary" onclick="showPage('recruitment')">
+    Recruitment Details
+  </button>
+</section>
 
-  <script>
-    const audio = document.getElementById("backgroundMusic");
-    const toggle = document.getElementById("musicToggle");
-    const volumeControl = document.getElementById("volumeControl");
-    const musicStatus = document.getElementById("musicStatus");
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">04</div>
+    <h2>Faction Motto</h2>
+  </div>
 
-    // Initial volume: 7%
+  <h3 style="color:var(--olive-light);letter-spacing:3px">
+    ONE CREW. ONE FAMILY.
+  </h3>
 
-    audio.volume = 0.07;
-    volumeControl.value = 0.07;
+  <p>
+    Unity is our foundation. Discipline is our standard.
+    Every member contributes to the strength of the Vanguard.
+  </p>
+</section>
 
-    function updateMusicUI() {
+</div>
+</div>
+</main>
 
-      if (audio.paused) {
+<!-- RECRUITMENT -->
 
-        toggle.textContent = "▶";
+<section id="recruitment" class="page">
+<div class="hero">
+  <div class="eyebrow">Personnel Division</div>
+  <h1>Recruitment</h1>
+  <div class="hero-line"></div>
+  <p>Become a part of Osiris Vanguard.</p>
+</div>
 
-        toggle.setAttribute(
-          "aria-label",
-          "Play background music"
-        );
+<div class="container">
+<aside class="sidebar">
+  <h3>Recruitment</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('personnel')">Personnel</button>
+    <button onclick="showPage('command')">Command</button>
+  </nav>
+</aside>
 
-        musicStatus.textContent =
-          "OSIRIS AMBIENCE // PAUSED";
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Recruitment Information</h2>
+  </div>
 
-      } else {
+  <p>
+    Osiris Vanguard welcomes dedicated and reliable individuals
+    who value teamwork, discipline, and cooperation.
+  </p>
 
-        toggle.textContent = "Ⅱ";
+  <div class="grid">
+    <div class="card">
+      <span class="card-code">REQUIREMENT // 01</span>
+      <h3>Activity</h3>
+      <p>Maintain reasonable activity and communicate with the unit.</p>
+    </div>
 
-        toggle.setAttribute(
-          "aria-label",
-          "Pause background music"
-        );
+    <div class="card">
+      <span class="card-code">REQUIREMENT // 02</span>
+      <h3>Conduct</h3>
+      <p>Respect members and follow faction regulations.</p>
+    </div>
+  </div>
+</section>
 
-        musicStatus.textContent =
-          "OSIRIS AMBIENCE // NOW PLAYING";
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">02</div>
+    <h2>Application Form</h2>
+  </div>
 
-      }
+  <form id="applicationForm">
 
-    }
+    <div class="field">
+      <label for="appName">Discord Username</label>
+      <input id="appName" required maxlength="80"
+             placeholder="Your Discord username">
+    </div>
 
-    async function startMusic() {
+    <div class="field">
+      <label for="appGame">In-game Username</label>
+      <input id="appGame" required maxlength="80"
+             placeholder="Your game username">
+    </div>
 
-      try {
+    <div class="field">
+      <label for="appAge">Age</label>
+      <input id="appAge" type="number" min="1" max="99" required>
+    </div>
 
-        audio.volume = Number(volumeControl.value);
+    <div class="field">
+      <label for="appExperience">Experience</label>
+      <textarea id="appExperience" required maxlength="1000"
+                placeholder="Describe your experience..."></textarea>
+    </div>
 
-        await audio.play();
+    <div class="field">
+      <label for="appReason">Why do you want to join?</label>
+      <textarea id="appReason" required maxlength="1000"
+                placeholder="Your motivation..."></textarea>
+    </div>
 
-        updateMusicUI();
+    <p class="form-note">
+      This demo form opens your email client. It does not automatically
+      store applications in a database.
+    </p>
 
-      } catch (error) {
+    <button class="btn primary" type="submit">
+      Submit Application
+    </button>
 
-        toggle.textContent = "▶";
+  </form>
+</section>
+</div>
+</div>
+</section>
 
-        musicStatus.textContent =
-          "OSIRIS AMBIENCE // PRESS PLAY";
+<!-- PERSONNEL -->
 
-      }
+<section id="personnel" class="page">
+<div class="hero">
+  <div class="eyebrow">Personnel Division</div>
+  <h1>Personnel</h1>
+  <div class="hero-line"></div>
+  <p>Official personnel directory of Osiris Vanguard.</p>
+</div>
 
-    }
+<div class="container">
+<aside class="sidebar">
+  <h3>Personnel Index</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('command')">Command Structure</button>
+    <button onclick="showPage('recruitment')">Recruitment</button>
+  </nav>
+</aside>
 
-    toggle.addEventListener("click", async () => {
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Personnel Roster</h2>
+  </div>
 
-      if (audio.paused) {
+  <p>
+    This is a demonstration roster. Replace the sample entries with
+    approved faction personnel information.
+  </p>
 
-        await startMusic();
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Rank</th>
+        <th>Department</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="personnelTable">
+      <tr>
+        <td>Commander</td>
+        <td><span class="badge">Commander</span></td>
+        <td>Command</td>
+        <td>Active</td>
+      </tr>
+      <tr>
+        <td>Personnel Placeholder</td>
+        <td><span class="badge">Recruit</span></td>
+        <td>General</td>
+        <td>Pending</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
 
-      } else {
+  <p class="form-note">
+    Discord member synchronization requires a secure backend and bot.
+  </p>
+</section>
+</div>
+</div>
+</section>
 
-        audio.pause();
+<!-- COMMAND -->
 
-        updateMusicUI();
+<section id="command" class="page">
+<div class="hero">
+  <div class="eyebrow">Command Division</div>
+  <h1>Command Structure</h1>
+  <div class="hero-line"></div>
+  <p>Leadership and organizational structure.</p>
+</div>
 
-      }
+<div class="container">
+<aside class="sidebar">
+  <h3>Command Index</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('personnel')">Personnel</button>
+    <button onclick="showPage('operations')">Operations</button>
+  </nav>
+</aside>
 
-    });
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Leadership</h2>
+  </div>
 
-    volumeControl.addEventListener("input", () => {
+  <div class="grid">
+    <div class="card">
+      <span class="card-code">COMMAND // 01</span>
+      <h3>Faction Commander</h3>
+      <p>Overall leadership and faction administration.</p>
+    </div>
 
-      audio.volume = Number(volumeControl.value);
+    <div class="card">
+      <span class="card-code">COMMAND // 02</span>
+      <h3>Deputy Commander</h3>
+      <p>Assists the commander and coordinates divisions.</p>
+    </div>
 
-    });
+    <div class="card">
+      <span class="card-code">COMMAND // 03</span>
+      <h3>Operations Officer</h3>
+      <p>Coordinates operational planning and execution.</p>
+    </div>
 
-    audio.addEventListener("play", updateMusicUI);
+    <div class="card">
+      <span class="card-code">COMMAND // 04</span>
+      <h3>Personnel Officer</h3>
+      <p>Oversees recruitment and personnel administration.</p>
+    </div>
+  </div>
+</section>
 
-    audio.addEventListener("pause", updateMusicUI);
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">02</div>
+    <h2>Rank Structure</h2>
+  </div>
 
-    audio.addEventListener("error", () => {
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Rank</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>01</td><td>Commander</td><td>Leadership</td></tr>
+      <tr><td>02</td><td>Deputy Commander</td><td>Leadership</td></tr>
+      <tr><td>03</td><td>Officer</td><td>Command</td></tr>
+      <tr><td>04</td><td>Senior Member</td><td>Personnel</td></tr>
+      <tr><td>05</td><td>Member</td><td>Personnel</td></tr>
+      <tr><td>06</td><td>Recruit</td><td>Entry</td></tr>
+    </tbody>
+  </table>
+  </div>
 
-      musicStatus.textContent =
-        "AUDIO FILE NOT FOUND";
+  <p class="form-note">
+    Replace these example ranks with the official faction hierarchy.
+  </p>
+</section>
+</div>
+</div>
+</section>
 
-    });
+<!-- OPERATIONS -->
 
-    // Attempt autoplay when the page loads.
-    // Browser autoplay policies may require user interaction.
+<section id="operations" class="page">
+<div class="hero">
+  <div class="eyebrow">Operations Division</div>
+  <h1>Operations</h1>
+  <div class="hero-line"></div>
+  <p>Operational records and mission briefings.</p>
+</div>
 
-    window.addEventListener("load", startMusic);
-  </script>
+<div class="container">
+<aside class="sidebar">
+  <h3>Operations Index</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('command')">Command</button>
+    <button onclick="showPage('intelligence')">Intelligence</button>
+  </nav>
+</aside>
+
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Operational Records</h2>
+  </div>
+
+  <div class="notice">
+    <strong>Operations // No Records</strong>
+    <p>
+      No official operational records have been published yet.
+      New briefings and activity reports will appear here.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="card-code">RECORD // 001</span>
+      <h3>Operational Briefing</h3>
+      <p>Reserved for future operational announcements.</p>
+    </div>
+
+    <div class="card">
+      <span class="card-code">RECORD // 002</span>
+      <h3>Activity Report</h3>
+      <p>Reserved for faction activity records.</p>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+</section>
+
+<!-- INTELLIGENCE -->
+
+<section id="intelligence" class="page">
+<div class="hero">
+  <div class="eyebrow">Intelligence Division</div>
+  <h1>Intelligence Archive</h1>
+  <div class="hero-line"></div>
+  <p>Faction reference materials and intelligence records.</p>
+</div>
+
+<div class="container">
+<aside class="sidebar">
+  <h3>Archive Index</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('operations')">Operations</button>
+    <button onclick="showPage('command')">Command</button>
+  </nav>
+</aside>
+
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Archive Directory</h2>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="card-code">ARCHIVE // 001</span>
+      <h3>Faction Reference</h3>
+      <p>Official faction reference materials.</p>
+    </div>
+
+    <div class="card">
+      <span class="card-code">ARCHIVE // 002</span>
+      <h3>Documentation</h3>
+      <p>Approved documentation and internal references.</p>
+    </div>
+  </div>
+
+  <p class="form-note">
+    Add links to approved documents or resources as needed.
+  </p>
+</section>
+</div>
+</div>
+</section>
+
+<!-- RULES -->
+
+<section id="rules" class="page">
+<div class="hero">
+  <div class="eyebrow">Official Directives</div>
+  <h1>Rules & Regulations</h1>
+  <div class="hero-line"></div>
+  <p>Official faction conduct standards and regulations.</p>
+
+  <div class="hero-actions">
+    <a class="btn primary" href="Rules/">
+      Open Existing Rules Page
+    </a>
+  </div>
+</div>
+
+<div class="container">
+<aside class="sidebar">
+  <h3>Directives</h3>
+  <nav>
+    <button onclick="showPage('home')">Headquarters</button>
+    <button onclick="showPage('recruitment')">Recruitment</button>
+    <button onclick="showPage('personnel')">Personnel</button>
+  </nav>
+</aside>
+
+<div class="content">
+<section class="panel">
+  <div class="panel-head">
+    <div class="panel-number">01</div>
+    <h2>Official Regulations</h2>
+  </div>
+
+  <p>
+    The existing Rules page remains separate.
+    Use the button above to access the full official regulations.
+  </p>
+</section>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+  <strong>ONE CREW. ONE FAMILY.</strong>
+  OSIRIS VANGUARD // OFFICIAL FACTION HEADQUARTERS
+</footer>
+
+<!-- MUSIC PLAYER -->
+
+<div class="music-player">
+  <img class="music-cover"
+       src="assets/ascend-cover.jpg"
+       alt="Ascend album cover">
+
+  <div class="music-info">
+    <div class="music-title">KEVIN GRAHAM — ASCEND</div>
+    <div class="music-status" id="musicStatus">OSIRIS AMBIENCE</div>
+  </div>
+
+  <div class="music-controls">
+    <button id="musicToggle" type="button" aria-label="Play music">▶</button>
+    <input id="volumeControl" type="range"
+           min="0" max="1" step="0.01" value="0.07"
+           aria-label="Music volume">
+  </div>
+</div>
+
+<audio id="backgroundMusic"
+       src="assets/bgm.mp3"
+       preload="auto"
+       loop
+       autoplay></audio>
+
+<script>
+/* PAGE NAVIGATION */
+
+const pages = document.querySelectorAll(".page");
+const navButtons = document.querySelectorAll(".navbar button");
+
+function showPage(pageId) {
+  const target = document.getElementById(pageId);
+
+  if (!target || !target.classList.contains("page")) {
+    return;
+  }
+
+  pages.forEach(page => page.classList.remove("active"));
+  target.classList.add("active");
+
+  navButtons.forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === pageId
+    );
+  });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (pageId === "rules") {
+    // Rules is a separate existing page.
+    // The in-page view provides a link to it.
+  }
+}
+
+navButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
+
+/* RECRUITMENT FORM */
+
+const applicationForm = document.getElementById("applicationForm");
+
+applicationForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const username = document.getElementById("appName").value.trim();
+  const gameName = document.getElementById("appGame").value.trim();
+  const age = document.getElementById("appAge").value;
+  const experience = document.getElementById("appExperience").value.trim();
+  const reason = document.getElementById("appReason").value.trim();
+
+  const subject = encodeURIComponent(
+    "OSIRIS VANGUARD Recruitment Application"
+  );
+
+  const body = encodeURIComponent(
+    "OSIRIS VANGUARD APPLICATION\n\n" +
+    "Discord Username: " + username + "\n" +
+    "In-game Username: " + gameName + "\n" +
+    "Age: " + age + "\n\n" +
+    "Experience:\n" + experience + "\n\n" +
+    "Motivation:\n" + reason
+  );
+
+  // Replace with the faction's actual application email.
+  const applicationEmail = "YOUR_EMAIL@example.com";
+
+  window.location.href =
+    "mailto:" + applicationEmail +
+    "?subject=" + subject +
+    "&body=" + body;
+});
+
+/* MUSIC PLAYER */
+
+const audio = document.getElementById("backgroundMusic");
+const musicToggle = document.getElementById("musicToggle");
+const volumeControl = document.getElementById("volumeControl");
+const musicStatus = document.getElementById("musicStatus");
+
+audio.volume = 0.07;
+volumeControl.value = 0.07;
+
+function updateMusic() {
+  if (audio.paused) {
+    musicToggle.textContent = "▶";
+    musicStatus.textContent = "OSIRIS AMBIENCE // PAUSED";
+  } else {
+    musicToggle.textContent = "Ⅱ";
+    musicStatus.textContent = "OSIRIS AMBIENCE // PLAYING";
+  }
+}
+
+async function playMusic() {
+  try {
+    audio.volume = Number(volumeControl.value);
+    await audio.play();
+    updateMusic();
+  } catch (error) {
+    musicToggle.textContent = "▶";
+    musicStatus.textContent = "PRESS PLAY TO START";
+  }
+}
+
+musicToggle.addEventListener("click", async () => {
+  if (audio.paused) {
+    await playMusic();
+  } else {
+    audio.pause();
+    updateMusic();
+  }
+});
+
+volumeControl.addEventListener("input", () => {
+  audio.volume = Number(volumeControl.value);
+});
+
+audio.addEventListener("play", updateMusic);
+audio.addEventListener("pause", updateMusic);
+
+audio.addEventListener("error", () => {
+  musicStatus.textContent = "AUDIO FILE NOT FOUND";
+});
+
+window.addEventListener("load", playMusic);
+</script>
 
 </body>
 </html>
