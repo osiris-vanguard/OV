@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,6 @@
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -53,14 +53,8 @@ body::after {
 }
 
 a { color: var(--olive-light); }
-
-button, input, textarea, select {
-  font: inherit;
-}
-
-button, a {
-  -webkit-tap-highlight-color: transparent;
-}
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
 
 /* HEADER */
 
@@ -344,9 +338,7 @@ button, a {
   border-radius: 3px;
 }
 
-.card:hover {
-  border-color: rgba(181,194,159,.5);
-}
+.card:hover { border-color: rgba(181,194,159,.5); }
 
 .card-code {
   display: block;
@@ -437,60 +429,9 @@ td { color: #c0c6bb; }
   letter-spacing: 1px;
 }
 
-/* FORMS */
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
-}
-
-.field label {
-  color: var(--olive-light);
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.field input,
-.field textarea,
-.field select {
-  width: 100%;
-  padding: 11px;
-  color: var(--text);
-  background: rgba(8,11,8,.65);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  outline: none;
-  font-size: 12px;
-}
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  border-color: var(--olive-light);
-}
-
-.field textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.field select option {
-  color: var(--text);
-  background: var(--bg);
-}
-
-.form-note {
-  color: var(--muted);
-  font-size: 11px;
-}
-
 /* PAGE NAVIGATION */
 
 .page { display: none; }
-
 .page.active { display: block; }
 
 /* FOOTER */
@@ -647,10 +588,10 @@ td { color: #c0c6bb; }
 
   <div class="hero-actions">
     <button class="btn primary" onclick="showPage('recruitment')">
-      Join the Vanguard
+      Recruitment
     </button>
 
-    <a class="btn" href="YOUR_DISCORD_INVITE_LINK"
+    <a class="btn" href="https://discord.gg/7aC9W9rhjt"
        target="_blank" rel="noopener noreferrer">
       Discord
     </a>
@@ -762,12 +703,14 @@ td { color: #c0c6bb; }
 
   <p>
     Interested in joining Osiris Vanguard?
-    Review the recruitment information and submit an application.
+    Visit our official Discord server for recruitment information.
   </p>
 
-  <button class="btn primary" onclick="showPage('recruitment')">
-    Recruitment Details
-  </button>
+  <a class="btn primary"
+     href="https://discord.gg/7aC9W9rhjt"
+     target="_blank" rel="noopener noreferrer">
+    Join Our Discord
+  </a>
 </section>
 
 <section class="panel">
@@ -798,6 +741,14 @@ td { color: #c0c6bb; }
   <h1>Recruitment</h1>
   <div class="hero-line"></div>
   <p>Become a part of Osiris Vanguard.</p>
+
+  <div class="hero-actions">
+    <a class="btn primary"
+       href="https://discord.gg/7aC9W9rhjt"
+       target="_blank" rel="noopener noreferrer">
+      Join Our Discord
+    </a>
+  </div>
 </div>
 
 <div class="container">
@@ -840,50 +791,19 @@ td { color: #c0c6bb; }
 <section class="panel">
   <div class="panel-head">
     <div class="panel-number">02</div>
-    <h2>Application Form</h2>
+    <h2>Join the Vanguard</h2>
   </div>
 
-  <form id="applicationForm">
+  <p>
+    Recruitment is handled through our official Discord server.
+    Join the server to learn more about the faction and its requirements.
+  </p>
 
-    <div class="field">
-      <label for="appName">Discord Username</label>
-      <input id="appName" required maxlength="80"
-             placeholder="Your Discord username">
-    </div>
-
-    <div class="field">
-      <label for="appGame">In-game Username</label>
-      <input id="appGame" required maxlength="80"
-             placeholder="Your game username">
-    </div>
-
-    <div class="field">
-      <label for="appAge">Age</label>
-      <input id="appAge" type="number" min="1" max="99" required>
-    </div>
-
-    <div class="field">
-      <label for="appExperience">Experience</label>
-      <textarea id="appExperience" required maxlength="1000"
-                placeholder="Describe your experience..."></textarea>
-    </div>
-
-    <div class="field">
-      <label for="appReason">Why do you want to join?</label>
-      <textarea id="appReason" required maxlength="1000"
-                placeholder="Your motivation..."></textarea>
-    </div>
-
-    <p class="form-note">
-      Complete the application and submit it through our official Discord server.
-      Your application will be copied so you can paste it into the recruitment channel.
-    </p>
-
-    <button class="btn primary" type="submit">
-      Copy Application & Open Discord
-    </button>
-
-  </form>
+  <a class="btn primary"
+     href="https://discord.gg/7aC9W9rhjt"
+     target="_blank" rel="noopener noreferrer">
+    Open Official Discord
+  </a>
 </section>
 </div>
 </div>
@@ -1220,6 +1140,10 @@ td { color: #c0c6bb; }
        autoplay></audio>
 
 <script>
+/* DISCORD INVITE */
+
+const DISCORD_INVITE = "https://discord.gg/7aC9W9rhjt";
+
 /* PAGE NAVIGATION */
 
 const pages = document.querySelectorAll(".page");
@@ -1249,111 +1173,6 @@ navButtons.forEach(button => {
   button.addEventListener("click", () => {
     showPage(button.dataset.page);
   });
-});
-
-/* DISCORD RECRUITMENT APPLICATION */
-
-const applicationForm = document.getElementById("applicationForm");
-
-/*
-  Replace this with your actual Discord invite link.
-*/
-const DISCORD_INVITE = "https://discord.gg/7aC9W9rhjt";
-
-applicationForm.addEventListener("submit", async event => {
-  event.preventDefault();
-
-  const username = document.getElementById("appName").value.trim();
-  const gameName = document.getElementById("appGame").value.trim();
-  const age = document.getElementById("appAge").value;
-  const experience = document.getElementById("appExperience").value.trim();
-  const reason = document.getElementById("appReason").value.trim();
-
-  const applicationText =
-`OSIRIS VANGUARD — RECRUITMENT APPLICATION
-
-Discord Username: ${username}
-In-game Username: ${gameName}
-Age: ${age}
-
-Experience:
-${experience}
-
-Motivation:
-${reason}`;
-
-  try {
-    await navigator.clipboard.writeText(applicationText);
-
-    alert(
-      "Your application has been copied!\n\n" +
-      "You will now be redirected to Discord.\n" +
-      "Paste your application into the recruitment channel."
-    );
-
-    window.open(DISCORD_INVITE, "_blank", "noopener,noreferrer");
-
-  } catch (error) {
-    /*
-      Clipboard access may be unavailable on some browsers.
-      Show the application so the applicant can copy it manually.
-    */
-    const applicationWindow = window.open("", "_blank");
-
-    if (applicationWindow) {
-      applicationWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <title>OSIRIS VANGUARD Application</title>
-          <style>
-            body {
-              background: #111510;
-              color: #d5d9d1;
-              font-family: Arial, sans-serif;
-              padding: 30px;
-            }
-            textarea {
-              width: 100%;
-              min-height: 350px;
-              background: #20261d;
-              color: #d5d9d1;
-              border: 1px solid #899875;
-              padding: 12px;
-              box-sizing: border-box;
-            }
-            a {
-              display: inline-block;
-              margin-top: 15px;
-              color: #b5c29f;
-            }
-          </style>
-        </head>
-        <body>
-          <h2>OSIRIS VANGUARD Application</h2>
-          <p>Copy your application below and submit it on Discord.</p>
-          <textarea id="applicationText"></textarea>
-          <br>
-          <a href="${DISCORD_INVITE}" target="_blank" rel="noopener">
-            Open Discord
-          </a>
-          <script>
-            document.getElementById("applicationText").value =
-              ${JSON.stringify(applicationText)};
-          <\/script>
-        </body>
-        </html>
-      `);
-
-      applicationWindow.document.close();
-    } else {
-      alert(
-        "Your application could not be copied automatically. " +
-        "Please allow pop-ups and try again."
-      );
-    }
-  }
 });
 
 /* MUSIC PLAYER */
@@ -1412,3 +1231,4 @@ window.addEventListener("load", playMusic);
 
 </body>
 </html>
+~~~
