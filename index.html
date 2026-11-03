@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,9 @@
 <meta name="theme-color" content="#171a16">
 <meta name="description" content="Official OSIRIS VANGUARD faction headquarters.">
 <title>OSIRIS VANGUARD | Official Headquarters</title>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root {
@@ -429,6 +431,43 @@ td { color: #c0c6bb; }
   letter-spacing: 1px;
 }
 
+.form-note {
+  margin-top: 15px !important;
+  color: var(--muted) !important;
+  font-size: 11px !important;
+}
+
+/* PERSONNEL */
+
+.personnel-count {
+  color: var(--olive-light);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.personnel-avatar {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  object-fit: cover;
+  vertical-align: middle;
+  margin-right: 9px;
+  background: var(--panel2);
+}
+
+.personnel-name {
+  display: inline-flex;
+  align-items: center;
+  color: #e1e5dc;
+}
+
+.personnel-loading {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 10px;
+}
+
 /* PAGE NAVIGATION */
 
 .page { display: none; }
@@ -837,39 +876,48 @@ td { color: #c0c6bb; }
   </div>
 
   <p>
-    This is a demonstration roster. Replace the sample entries with
-    approved faction personnel information.
+    Official personnel records synchronized with the OSIRIS VANGUARD
+    Discord server.
   </p>
 
-  <div class="table-wrap">
+  <div class="stats">
+    <div class="stat">
+      <strong id="personnelTotal">—</strong>
+      <span>Total Personnel</span>
+    </div>
+    <div class="stat">
+      <strong id="personnelActive">—</strong>
+      <span>Synced Records</span>
+    </div>
+    <div class="stat">
+      <strong id="personnelConnection">...</strong>
+      <span>Database Status</span>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:20px">
   <table>
     <thead>
       <tr>
-        <th>Username</th>
-        <th>Rank</th>
+        <th>Personnel</th>
+        <th>Rank / Roles</th>
         <th>Department</th>
         <th>Status</th>
       </tr>
     </thead>
+
     <tbody id="personnelTable">
       <tr>
-        <td>Commander</td>
-        <td><span class="badge">Commander</span></td>
-        <td>Command</td>
-        <td>Active</td>
-      </tr>
-      <tr>
-        <td>Personnel Placeholder</td>
-        <td><span class="badge">Recruit</span></td>
-        <td>General</td>
-        <td>Pending</td>
+        <td colspan="4" class="personnel-loading">
+          Loading personnel database...
+        </td>
       </tr>
     </tbody>
   </table>
   </div>
 
-  <p class="form-note">
-    Discord member synchronization requires a secure backend and bot.
+  <p class="form-note" id="personnelStatus">
+    Connecting to personnel database...
   </p>
 </section>
 </div>
@@ -1121,7 +1169,7 @@ td { color: #c0c6bb; }
        alt="Ascend album cover">
 
   <div class="music-info">
-    <div class="music-title">KEVIN GRAHAM — ASCEND</div>
+    <div class="music-title">KEVIN GRAHAM — VALENCE</div>
     <div class="music-status" id="musicStatus">OSIRIS AMBIENCE</div>
   </div>
 
@@ -1143,6 +1191,7 @@ td { color: #c0c6bb; }
 /* DISCORD INVITE */
 
 const DISCORD_INVITE = "https://discord.gg/7aC9W9rhjt";
+
 
 /* PAGE NAVIGATION */
 
@@ -1166,7 +1215,10 @@ function showPage(pageId) {
     );
   });
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 navButtons.forEach(button => {
@@ -1174,6 +1226,7 @@ navButtons.forEach(button => {
     showPage(button.dataset.page);
   });
 });
+
 
 /* MUSIC PLAYER */
 
@@ -1188,21 +1241,31 @@ volumeControl.value = 0.07;
 function updateMusic() {
   if (audio.paused) {
     musicToggle.textContent = "▶";
-    musicStatus.textContent = "OSIRIS AMBIENCE // PAUSED";
+    musicToggle.setAttribute("aria-label", "Play music");
+
+    musicStatus.textContent =
+      "OSIRIS AMBIENCE // PAUSED";
   } else {
     musicToggle.textContent = "Ⅱ";
-    musicStatus.textContent = "OSIRIS AMBIENCE // PLAYING";
+    musicToggle.setAttribute("aria-label", "Pause music");
+
+    musicStatus.textContent =
+      "OSIRIS AMBIENCE // PLAYING";
   }
 }
 
 async function playMusic() {
   try {
     audio.volume = Number(volumeControl.value);
+
     await audio.play();
+
     updateMusic();
   } catch (error) {
     musicToggle.textContent = "▶";
-    musicStatus.textContent = "PRESS PLAY TO START";
+
+    musicStatus.textContent =
+      "PRESS PLAY TO START";
   }
 }
 
@@ -1223,12 +1286,399 @@ audio.addEventListener("play", updateMusic);
 audio.addEventListener("pause", updateMusic);
 
 audio.addEventListener("error", () => {
-  musicStatus.textContent = "AUDIO FILE NOT FOUND";
+  musicStatus.textContent =
+    "AUDIO FILE NOT FOUND";
 });
 
-window.addEventListener("load", playMusic);
+window.addEventListener("load", () => {
+  playMusic();
+});
+
+
+/* =========================================
+   SUPABASE PERSONNEL DATABASE
+========================================= */
+
+/*
+  Public Supabase configuration.
+
+  Never place a Supabase Secret Key or Discord Bot Token
+  inside this frontend HTML file.
+*/
+
+const SUPABASE_URL =
+  "https://rtdrfhbmplqnshvcgugg.supabase.co";
+
+const SUPABASE_PUBLIC_KEY =
+  "sb_publishable_BJmdA_Rt8bLYasn2ug0WWA_U4WLFIAq";
+
+
+/* CREATE SUPABASE CLIENT */
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLIC_KEY
+);
+
+
+/* PERSONNEL ELEMENTS */
+
+const personnelTable =
+  document.getElementById("personnelTable");
+
+const personnelStatus =
+  document.getElementById("personnelStatus");
+
+const personnelTotal =
+  document.getElementById("personnelTotal");
+
+const personnelActive =
+  document.getElementById("personnelActive");
+
+const personnelConnection =
+  document.getElementById("personnelConnection");
+
+
+/* SAFE TEXT CELL */
+
+function createTextCell(value) {
+  const td = document.createElement("td");
+
+  td.textContent =
+    value === null ||
+    value === undefined ||
+    value === ""
+      ? "Unknown"
+      : String(value);
+
+  return td;
+}
+
+
+/* ROLE PARSER */
+
+function getPersonnelRoles(roleNames) {
+  if (!roleNames) {
+    return [];
+  }
+
+  if (Array.isArray(roleNames)) {
+    return roleNames
+      .map(role => {
+        if (typeof role === "string") {
+          return role;
+        }
+
+        if (role && typeof role === "object") {
+          return (
+            role.name ||
+            role.role_name ||
+            role.display_name ||
+            ""
+          );
+        }
+
+        return "";
+      })
+      .filter(Boolean);
+  }
+
+  if (typeof roleNames === "string") {
+    try {
+      const parsed = JSON.parse(roleNames);
+
+      if (Array.isArray(parsed)) {
+        return getPersonnelRoles(parsed);
+      }
+
+      return [roleNames];
+    } catch {
+      return [roleNames];
+    }
+  }
+
+  return [];
+}
+
+
+/* DETERMINE DEPARTMENT */
+
+function getPersonnelDepartment(roles) {
+  const normalizedRoles = roles.map(role =>
+    String(role).toLowerCase()
+  );
+
+  const commandRoles = [
+    "commander",
+    "deputy commander",
+    "command",
+    "officer",
+    "leadership",
+    "director"
+  ];
+
+  const isCommand = normalizedRoles.some(role =>
+    commandRoles.some(commandRole =>
+      role.includes(commandRole)
+    )
+  );
+
+  return isCommand
+    ? "Command"
+    : "General";
+}
+
+
+/* CREATE PERSONNEL NAME CELL */
+
+function createPersonnelNameCell(member) {
+  const td = document.createElement("td");
+
+  const nameContainer =
+    document.createElement("span");
+
+  nameContainer.className = "personnel-name";
+
+  if (member.avatar_url) {
+    const avatar = document.createElement("img");
+
+    avatar.className = "personnel-avatar";
+    avatar.src = member.avatar_url;
+    avatar.alt = "";
+    avatar.loading = "lazy";
+
+    avatar.onerror = () => {
+      avatar.remove();
+    };
+
+    nameContainer.appendChild(avatar);
+  }
+
+  const name = document.createElement("span");
+
+  name.textContent =
+    member.display_name ||
+    member.username ||
+    "Unknown Member";
+
+  nameContainer.appendChild(name);
+
+  td.appendChild(nameContainer);
+
+  return td;
+}
+
+
+/* CREATE ROLE BADGES */
+
+function createRoleCell(roles) {
+  const td = document.createElement("td");
+
+  if (!roles || roles.length === 0) {
+    const badge = document.createElement("span");
+
+    badge.className = "badge";
+    badge.textContent = "Member";
+
+    td.appendChild(badge);
+
+    return td;
+  }
+
+  roles.forEach((role, index) => {
+    const badge = document.createElement("span");
+
+    badge.className = "badge";
+    badge.textContent = role;
+
+    if (index > 0) {
+      badge.style.marginLeft = "4px";
+    }
+
+    td.appendChild(badge);
+  });
+
+  return td;
+}
+
+
+/* RENDER EMPTY STATE */
+
+function renderPersonnelEmpty(message) {
+  personnelTable.replaceChildren();
+
+  const row = document.createElement("tr");
+  const cell = document.createElement("td");
+
+  cell.colSpan = 4;
+  cell.className = "personnel-loading";
+  cell.textContent = message;
+
+  row.appendChild(cell);
+
+  personnelTable.appendChild(row);
+}
+
+
+/* RENDER PERSONNEL */
+
+function renderPersonnel(members) {
+  personnelTable.replaceChildren();
+
+  if (!members || members.length === 0) {
+    renderPersonnelEmpty(
+      "No personnel records found."
+    );
+
+    personnelTotal.textContent = "0";
+    personnelActive.textContent = "0";
+
+    return;
+  }
+
+  members.forEach(member => {
+    const row = document.createElement("tr");
+
+    const roles = getPersonnelRoles(
+      member.role_names
+    );
+
+    const department =
+      getPersonnelDepartment(roles);
+
+    const status = member.synced_at
+      ? "Active"
+      : "Unknown";
+
+    row.appendChild(
+      createPersonnelNameCell(member)
+    );
+
+    row.appendChild(
+      createRoleCell(roles)
+    );
+
+    row.appendChild(
+      createTextCell(department)
+    );
+
+    row.appendChild(
+      createTextCell(status)
+    );
+
+    personnelTable.appendChild(row);
+  });
+
+  personnelTotal.textContent =
+    String(members.length);
+
+  personnelActive.textContent =
+    String(
+      members.filter(member =>
+        Boolean(member.synced_at)
+      ).length
+    );
+}
+
+
+/* FETCH PERSONNEL FROM SUPABASE */
+
+async function loadPersonnel() {
+  try {
+    personnelStatus.textContent =
+      "Synchronizing personnel database...";
+
+    personnelConnection.textContent =
+      "CONNECTING";
+
+    const { data, error } = await supabaseClient
+      .from("personnel")
+      .select(
+        "discord_user_id, username, display_name, avatar_url, role_names, synced_at"
+      )
+      .order("username", {
+        ascending: true
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    renderPersonnel(data);
+
+    personnelConnection.textContent =
+      "ONLINE";
+
+    personnelStatus.textContent =
+      `Personnel database synchronized // ${data.length} members`;
+
+  } catch (error) {
+    console.error(
+      "Personnel database error:",
+      error
+    );
+
+    personnelConnection.textContent =
+      "OFFLINE";
+
+    personnelStatus.textContent =
+      "Unable to connect to personnel database.";
+
+    renderPersonnelEmpty(
+      "Personnel data is currently unavailable."
+    );
+
+    personnelTotal.textContent = "—";
+    personnelActive.textContent = "—";
+  }
+}
+
+
+/* INITIAL LOAD */
+
+loadPersonnel();
+
+
+/* AUTOMATIC REFRESH EVERY 60 SECONDS */
+
+setInterval(() => {
+  loadPersonnel();
+}, 60000);
+
+
+/* SUPABASE REALTIME SUBSCRIPTION */
+
+const personnelRealtimeChannel =
+  supabaseClient
+    .channel("osiris-personnel-updates")
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "personnel"
+      },
+      () => {
+        loadPersonnel();
+      }
+    )
+
+    .subscribe((status) => {
+      if (status === "SUBSCRIBED") {
+        console.log(
+          "OSIRIS personnel realtime connected."
+        );
+      }
+
+      if (status === "CHANNEL_ERROR") {
+        console.error(
+          "OSIRIS personnel realtime connection failed."
+        );
+      }
+    });
+
 </script>
 
 </body>
 </html>
-~~~
