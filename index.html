@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -651,7 +650,8 @@ td { color: #c0c6bb; }
       Join the Vanguard
     </button>
 
-    <a class="btn" href="https://discord.com/" target="_blank" rel="noopener">
+    <a class="btn" href="YOUR_DISCORD_INVITE_LINK"
+       target="_blank" rel="noopener noreferrer">
       Discord
     </a>
 
@@ -875,12 +875,12 @@ td { color: #c0c6bb; }
     </div>
 
     <p class="form-note">
-      This demo form opens your email client. It does not automatically
-      store applications in a database.
+      Complete the application and submit it through our official Discord server.
+      Your application will be copied so you can paste it into the recruitment channel.
     </p>
 
     <button class="btn primary" type="submit">
-      Submit Application
+      Copy Application & Open Discord
     </button>
 
   </form>
@@ -1243,11 +1243,6 @@ function showPage(pageId) {
   });
 
   window.scrollTo({ top: 0, behavior: "smooth" });
-
-  if (pageId === "rules") {
-    // Rules is a separate existing page.
-    // The in-page view provides a link to it.
-  }
 }
 
 navButtons.forEach(button => {
@@ -1256,11 +1251,16 @@ navButtons.forEach(button => {
   });
 });
 
-/* RECRUITMENT FORM */
+/* DISCORD RECRUITMENT APPLICATION */
 
 const applicationForm = document.getElementById("applicationForm");
 
-applicationForm.addEventListener("submit", event => {
+/*
+  Replace this with your actual Discord invite link.
+*/
+const DISCORD_INVITE = "https://discord.gg/7aC9W9rhjt";
+
+applicationForm.addEventListener("submit", async event => {
   event.preventDefault();
 
   const username = document.getElementById("appName").value.trim();
@@ -1269,26 +1269,91 @@ applicationForm.addEventListener("submit", event => {
   const experience = document.getElementById("appExperience").value.trim();
   const reason = document.getElementById("appReason").value.trim();
 
-  const subject = encodeURIComponent(
-    "OSIRIS VANGUARD Recruitment Application"
-  );
+  const applicationText =
+`OSIRIS VANGUARD — RECRUITMENT APPLICATION
 
-  const body = encodeURIComponent(
-    "OSIRIS VANGUARD APPLICATION\n\n" +
-    "Discord Username: " + username + "\n" +
-    "In-game Username: " + gameName + "\n" +
-    "Age: " + age + "\n\n" +
-    "Experience:\n" + experience + "\n\n" +
-    "Motivation:\n" + reason
-  );
+Discord Username: ${username}
+In-game Username: ${gameName}
+Age: ${age}
 
-  // Replace with the faction's actual application email.
-  const applicationEmail = "YOUR_EMAIL@example.com";
+Experience:
+${experience}
 
-  window.location.href =
-    "mailto:" + applicationEmail +
-    "?subject=" + subject +
-    "&body=" + body;
+Motivation:
+${reason}`;
+
+  try {
+    await navigator.clipboard.writeText(applicationText);
+
+    alert(
+      "Your application has been copied!\n\n" +
+      "You will now be redirected to Discord.\n" +
+      "Paste your application into the recruitment channel."
+    );
+
+    window.open(DISCORD_INVITE, "_blank", "noopener,noreferrer");
+
+  } catch (error) {
+    /*
+      Clipboard access may be unavailable on some browsers.
+      Show the application so the applicant can copy it manually.
+    */
+    const applicationWindow = window.open("", "_blank");
+
+    if (applicationWindow) {
+      applicationWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>OSIRIS VANGUARD Application</title>
+          <style>
+            body {
+              background: #111510;
+              color: #d5d9d1;
+              font-family: Arial, sans-serif;
+              padding: 30px;
+            }
+            textarea {
+              width: 100%;
+              min-height: 350px;
+              background: #20261d;
+              color: #d5d9d1;
+              border: 1px solid #899875;
+              padding: 12px;
+              box-sizing: border-box;
+            }
+            a {
+              display: inline-block;
+              margin-top: 15px;
+              color: #b5c29f;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>OSIRIS VANGUARD Application</h2>
+          <p>Copy your application below and submit it on Discord.</p>
+          <textarea id="applicationText"></textarea>
+          <br>
+          <a href="${DISCORD_INVITE}" target="_blank" rel="noopener">
+            Open Discord
+          </a>
+          <script>
+            document.getElementById("applicationText").value =
+              ${JSON.stringify(applicationText)};
+          <\/script>
+        </body>
+        </html>
+      `);
+
+      applicationWindow.document.close();
+    } else {
+      alert(
+        "Your application could not be copied automatically. " +
+        "Please allow pop-ups and try again."
+      );
+    }
+  }
 });
 
 /* MUSIC PLAYER */
