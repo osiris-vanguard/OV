@@ -591,6 +591,66 @@ td { color: #c0c6bb; }
 @media(prefers-reduced-motion:reduce) {
   html { scroll-behavior: auto; }
 }
+
+
+/* INTELLIGENCE ARCHIVE GALLERY — scoped to this page only */
+#intelligence .archive-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+}
+#intelligence .archive-card {
+  min-width: 0;
+  overflow: hidden;
+  padding: 12px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  transition: border-color .2s, transform .2s;
+}
+#intelligence .archive-card:hover {
+  border-color: rgba(181,194,159,.6);
+  transform: translateY(-2px);
+}
+#intelligence .archive-image-link {
+  display: block;
+  overflow: hidden;
+  margin-top: 10px;
+  background: #090c09;
+  border: 1px solid var(--border);
+}
+#intelligence .archive-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  opacity: .94;
+  transition: transform .3s ease, opacity .3s ease;
+}
+#intelligence .archive-image-link:hover .archive-image {
+  opacity: 1;
+  transform: scale(1.035);
+}
+#intelligence .archive-card h3 { margin-top: 13px; }
+#intelligence .archive-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 13px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+#intelligence .archive-open {
+  color: var(--olive-light);
+  text-decoration: none;
+  white-space: nowrap;
+}
+#intelligence .archive-open:hover { text-decoration: underline; }
+
 </style>
 </head>
 
@@ -1188,22 +1248,55 @@ td { color: #c0c6bb; }
     <h2>Archive Directory</h2>
   </div>
 
-  <div class="grid">
-    <div class="card">
+  <div class="archive-gallery">
+    <article class="archive-card">
       <span class="card-code">ARCHIVE // 001</span>
       <h3>Faction Reference</h3>
       <p>Official faction reference materials.</p>
-    </div>
+      <div class="archive-meta">
+        <span>REFERENCE MATERIAL</span>
+        <span>OSIRIS VANGUARD</span>
+      </div>
+    </article>
 
-    <div class="card">
+    <article class="archive-card">
       <span class="card-code">ARCHIVE // 002</span>
       <h3>Documentation</h3>
       <p>Approved documentation and internal references.</p>
-    </div>
+      <div class="archive-meta">
+        <span>DOCUMENTATION</span>
+        <span>OSIRIS VANGUARD</span>
+      </div>
+    </article>
+
+    <article class="archive-card">
+      <span class="card-code">OPERATIONAL VISUALS // 006</span>
+      <a class="archive-image-link"
+         href="assets/operation-visual-006.jpg"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Open original operational photograph">
+        <img
+          class="archive-image"
+          src="assets/operation-visual-006.jpg"
+          alt="OSIRIS VANGUARD armored unit during a low-visibility operation"
+          loading="lazy"
+        >
+      </a>
+      <h3>Field Operations</h3>
+      <p>Armored unit deployment captured during a low-visibility operation.</p>
+      <div class="archive-meta">
+        <span>CLASSIFIED VISUAL</span>
+        <a class="archive-open"
+           href="assets/operation-visual-006.jpg"
+           target="_blank"
+           rel="noopener noreferrer">VIEW ORIGINAL ↗</a>
+      </div>
+    </article>
   </div>
 
   <p class="form-note">
-    Add links to approved documents or resources as needed.
+    OSIRIS VANGUARD // INTELLIGENCE ARCHIVE
   </p>
 </section>
 </div>
